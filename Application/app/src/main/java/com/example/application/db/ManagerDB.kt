@@ -6,8 +6,7 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import com.example.application.data.createTableConfig
-import com.example.application.data.getTableConfig
+import com.example.application.data.ConfigTableFuns
 
 /*
  * Generic Manager for SQLite database.
@@ -40,7 +39,7 @@ class ManagerDB(context: Context,
     }
     private fun getTables() : List<Pair<String,List<String>>> {
         val res : MutableList<Pair<String,List<String>>> = mutableListOf()
-        res.add(Pair(getTableConfig(), createTableConfig()))
+        res.add(Pair(ConfigTableFuns.getTableConfig(), ConfigTableFuns.createTableConfig()))
         return res
     }
     override fun onCreate(db: SQLiteDatabase?) {
