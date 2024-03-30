@@ -14,21 +14,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <!-- CS STATS ID TextView -->
             <TextView
                 android:id="@+id/csStatsIdTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="CS STATS ID"
+                android:text="@string/cs_stats_id"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/inputEditText"
+                app:layout_constraintEnd_toStartOf="@id/csstatsid"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginEnd="8dp"/>
 
-            <!-- Input EditText -->
             <EditText
-                android:id="@+id/inputEditText"
+                android:id="@+id/csstatsid"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toEndOf="@id/csStatsIdTextView"
@@ -38,6 +36,13 @@
                 android:layout_marginStart="8dp"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+        
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/submit_config"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/baseline_add_24"
+            android:text="@string/save_config" />
     </LinearLayout>
 
 

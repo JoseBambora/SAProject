@@ -6,7 +6,7 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import com.example.application.data.createTableConfiguration
+import com.example.application.data.createTableConfig
 import com.example.application.data.getTableConfig
 
 /*
@@ -40,7 +40,7 @@ class ManagerDB(context: Context,
     }
     private fun getTables() : List<Pair<String,List<String>>> {
         val res : MutableList<Pair<String,List<String>>> = mutableListOf()
-        res.add(Pair(getTableConfig(), createTableConfiguration()))
+        res.add(Pair(getTableConfig(), createTableConfig()))
         return res
     }
     override fun onCreate(db: SQLiteDatabase?) {
@@ -68,12 +68,13 @@ class ManagerDB(context: Context,
         db.close()
     }
 
-    fun select(table : String, whereClause : String?, content : List<String>?) : Cursor {
+    fun <T>select(table : String, whereClause : String?, content : List<String>?, function : (Cursor) -> T) : T {
         val db = readableDatabase
         val query = if (whereClause == null) "" else "WHERE $whereClause"
         val cursor = db.rawQuery("SELECT * FROM $table $query",content?.toTypedArray())
+        val res = function.invoke(cursor)
         db.close()
-        return cursor
+        return res
     }
 
 
