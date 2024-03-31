@@ -2,6 +2,18 @@ from selenium.webdriver.common.by import By
 import logging
 from utils import Utils
 
+def is_int(value):
+    try:
+        return int(value)
+    except ValueError:
+        return None
+
+def is_float(value):
+    try:
+        return float(value)
+    except ValueError:
+        return None
+
 # Uses selenium to obtain stats from csgostats.gg
 def scrape_profile(url, utils : Utils):
     matches = get_matches(utils,url)
@@ -11,14 +23,22 @@ def scrape_profile(url, utils : Utils):
         'matches' : matches
     }
 
+
+def get_type_value(value):
+    i = is_int(value)
+    if i != None:
+        return i
+    else:
+        f = is_float(value)
+        if f != None:
+            return f
+        else:
+            return value
+
 def build_res_metadata(util : Utils,name,rating,kd,overall_stats):
-    stats = {n : overall_stats[util.index1[n]] for n in util.names1 } 
-    return {
-        'name': name,
-        'rating' : rating,
-        'kpd' : kd,
-        'stats' : stats
-    }
+    stats = {n : get_type_value(overall_stats[util.index1[n]]) for n in util.names1 } 
+    stats.update({'name': name,'rating' : float(rating),'kpd' : float(kd)})
+    return stats
 
 def get_metadata(util : Utils,url):
     logging.info("Task Started: Get metadata")
@@ -37,7 +57,7 @@ def get_element(html, index):
 
 def scrap_row(util : Utils ,row):
     tds = row.find_elements(By.TAG_NAME,'td')
-    return {name : get_element(tds,util.index2[name]) for name in util.names2}
+    return {name : get_type_value(get_element(tds,util.index2[name])) for name in util.names2}
 
 def get_matches(util : Utils,player_profile):
     logging.info("Task Started: Get matches stats")

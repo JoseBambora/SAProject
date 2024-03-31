@@ -7,7 +7,6 @@ from flask import Flask, jsonify
 
 app = Flask(__name__)
 
-
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 util = Utils()
 
@@ -21,7 +20,7 @@ def get_stats(id):
 @app.route('/stats/<string:idPlayer>/', methods=['GET'])
 def getCsStats(idPlayer):
     data = get_stats(idPlayer)
-    return jsonify({'data': data })
+    return jsonify(data)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

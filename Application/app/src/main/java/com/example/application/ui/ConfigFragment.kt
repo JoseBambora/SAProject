@@ -18,25 +18,18 @@ import com.example.application.db.ManagerDB
 class ConfigFragment : Fragment() {
 
     private var config : Config? = null
-    private val selectedVersion : Int = ConfigTableFuns.getNumberSelected()
-    private val tableName : String = ConfigTableFuns.getTableConfig()
-    private val whereClause : String = ConfigTableFuns.whereClauseLast()
-    private val whereClauseValues : List<String> = ConfigTableFuns.whereClauseLastList()
-    private val mdb : ManagerDB? = ManagerDB.getInstance()
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_config, container, false)
-        val list = mdb?.select(tableName, whereClause, whereClauseValues, ConfigTableFuns::convertEntriesConfigs )
-        fillEditText(view,list)
+        config = ConfigTableFuns.getLastVersion()
+        fillEditText(view)
         setOnClicks(view)
         return view
     }
-    private fun fillEditText(view : View, list : List<Config>?) {
-        if (!list.isNullOrEmpty()) {
-            config = list.first()
+    private fun fillEditText(view : View) {
+        if (config != null) {
             view.findViewById<EditText>(R.id.csstatsid)?.setText(config?.csstatsID)
         }
     }
@@ -46,11 +39,7 @@ class ConfigFragment : Fragment() {
     }
     private fun saveConfig() {
         val csstatsid = view?.findViewById<EditText>(R.id.csstatsid)?.text.toString()
-        if(config != null) {
-            val updateClause = ConfigTableFuns.updateTableConfig(config!!.noMoreCurrentVersion())
-            mdb?.update(tableName, updateClause, whereClause, whereClauseValues)
-        }
-        mdb?.insert(tableName, ConfigTableFuns.updateTableConfig(Config(0,csstatsid, selectedVersion)))
+        ConfigTableFuns.newConfig(config,csstatsid)
         Toast.makeText(activity, "Config saved", Toast.LENGTH_SHORT).show()
         findNavController().navigate(R.id.action_to_inicial_menu)
     }
