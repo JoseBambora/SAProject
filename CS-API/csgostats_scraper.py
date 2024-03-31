@@ -21,7 +21,7 @@ def build_res_metadata(util : Utils,name,rating,kd,overall_stats):
     }
 
 def get_metadata(util : Utils,url):
-    logging.info("Task started: Get metadata")
+    logging.info("Task Started: Get metadata")
     driver = util.driver
     driver.get(url)
     name = driver.find_element(By.ID,'player-name').text
@@ -29,18 +29,18 @@ def get_metadata(util : Utils,url):
     kd = driver.find_element(By.ID,'kpd').text
     overall_stats = driver.find_elements(By.CLASS_NAME, "total-stat")
     overall_stats = [elem.find_element(By.CLASS_NAME, "total-value").get_attribute('innerHTML') for elem in overall_stats]
-    logging.info("Task completed: Get metadata")
+    logging.info("Task Completed: Get metadata")
     return build_res_metadata(util,name,rating,kd,overall_stats)
 
 def get_element(html, index):
-    return html[index].get_attribute('innerText')
+    return html[index].get_attribute('innerText').strip()
 
 def scrap_row(util : Utils ,row):
     tds = row.find_elements(By.TAG_NAME,'td')
     return {name : get_element(tds,util.index2[name]) for name in util.names2}
 
 def get_matches(util : Utils,player_profile):
-    logging.info("Task Start: Get matches stats")
+    logging.info("Task Started: Get matches stats")
     driver = util.driver
     driver.get(player_profile+'#/matches')
     rows = driver.find_elements(By.CLASS_NAME, "p-row.js-link")

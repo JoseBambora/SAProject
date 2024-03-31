@@ -5,3 +5,4 @@ DateTime~=5.0
 google~=3.0.0
 selenium~=4.9.1
 webdriver-manager~=4.0.1
+Flask==3.0.2
