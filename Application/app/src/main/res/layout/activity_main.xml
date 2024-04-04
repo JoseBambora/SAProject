@@ -15,7 +15,11 @@
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize" />
+            android:layout_height="?attr/actionBarSize"
+            android:background="@drawable/navbar"
+            app:contentInsetStart="10dp"
+            app:titleTextColor="@color/white"
+            app:title="@string/sa_project"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 

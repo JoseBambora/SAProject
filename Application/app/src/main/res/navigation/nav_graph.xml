@@ -8,7 +8,6 @@
     <fragment
         android:id="@+id/FirstFragment"
         android:name="com.example.application.ui.FirstFragment"
-        android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_first">
 
         <action
@@ -18,7 +17,6 @@
     <fragment
         android:id="@+id/SecondFragment"
         android:name="com.example.application.ui.SecondFragment"
-        android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_second">
 
         <action
@@ -28,7 +26,6 @@
     <fragment
         android:id="@+id/ConfigFragment"
         android:name="com.example.application.ui.ConfigFragment"
-        android:label="Configuration Menu"
         tools:layout="@layout/fragment_config">
         <action
             android:id="@+id/action_to_inicial_menu"
