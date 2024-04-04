@@ -1,7 +1,6 @@
 package com.example.application.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.application.R
 import com.example.application.data.Config
 import com.example.application.data.ConfigTableFuns
-import com.example.application.db.ManagerDB
 
 class ConfigFragment : Fragment() {
 

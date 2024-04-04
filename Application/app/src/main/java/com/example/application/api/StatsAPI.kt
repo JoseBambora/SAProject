@@ -1,11 +1,7 @@
 package com.example.application.api
 
 import android.icu.text.SimpleDateFormat
-import android.util.Log
-import com.example.application.data.Cache
 import com.example.application.data.Stats
-import com.google.gson.JsonDeserializer
-import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
