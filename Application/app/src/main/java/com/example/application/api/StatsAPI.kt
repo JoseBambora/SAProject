@@ -1,7 +1,7 @@
 package com.example.application.api
 
 import android.icu.text.SimpleDateFormat
-import com.example.application.data.Stats
+import com.example.application.data.csstats.Stats
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

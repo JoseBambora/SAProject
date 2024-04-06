@@ -1,4 +1,4 @@
-package com.example.application.data
+package com.example.application.data.csstats
 
 import android.os.Build
 import androidx.annotation.RequiresApi

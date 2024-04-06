@@ -12,9 +12,9 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.application.R
 import com.example.application.api.StatsAPI
-import com.example.application.data.Cache
-import com.example.application.data.ConfigTableFuns
-import com.example.application.data.Stats
+import com.example.application.data.csstats.Cache
+import com.example.application.data.config.ConfigTableFuns
+import com.example.application.data.csstats.Stats
 import com.example.application.databinding.FragmentFirstBinding
 import retrofit2.Response
 

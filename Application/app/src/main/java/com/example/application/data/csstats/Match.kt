@@ -1,4 +1,4 @@
-package com.example.application.data
+package com.example.application.data.csstats
 
 import com.example.application.api.DateDeserializer
 import com.google.gson.annotations.JsonAdapter

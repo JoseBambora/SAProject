@@ -1,17 +1,9 @@
-package com.example.application.data
+package com.example.application.data.config
 
 import android.content.ContentValues
 import android.database.Cursor
 import com.example.application.db.InsertBuilder
 import com.example.application.db.ManagerDB
-
-
-data class Config(val version : Int, val csstatsID : String, val current_version : Int) {
-    fun noMoreCurrentVersion() : Config {
-        return this.copy(current_version = 0)
-    }
-}
-
 
 /* Functions related with database operations:
  * - createTableConfig: Supports the creation of Activities table.
@@ -29,6 +21,8 @@ class ConfigTableFuns {
         private fun updateTableConfig(cnf : Config) : ContentValues {
             val values = ContentValues().apply {
                 put("csstatsID",cnf.csstatsID)
+                put("weight",cnf.bodyWeight)
+                put("location_act",cnf.locationSensor)
                 put("selected",cnf.current_version)
             }
             return values
@@ -37,8 +31,11 @@ class ConfigTableFuns {
         private fun convertEntryConfig(cursor : Cursor) : Config {
             val version = cursor.getInt(cursor.getColumnIndexOrThrow("version"))
             val csstats_id = cursor.getString(cursor.getColumnIndexOrThrow("csstatsID"))
+            val bodyWeight = cursor.getFloat(cursor.getColumnIndexOrThrow("weight"))
+            val locationSensor = cursor.getInt(cursor.getColumnIndexOrThrow("location_act")) == 1
             val selected = cursor.getInt(cursor.getColumnIndexOrThrow("selected"))
-            return Config(version,csstats_id,selected)
+
+            return Config(version,csstats_id,bodyWeight,locationSensor,selected)
         }
 
         private fun convertEntriesConfigs(cursor : Cursor) : List<Config> {
@@ -76,6 +73,8 @@ class ConfigTableFuns {
             val attributes = InsertBuilder()
             attributes.addAtribute("version","INTEGER",isNull = false,isPrimaryKey = true,autoIncrement = true)
             attributes.addAtribute("csstatsID","TEXT",isNull = false,isPrimaryKey = false,autoIncrement = false)
+            attributes.addAtribute("weight","FLOAT",isNull = false,isPrimaryKey = false,autoIncrement = false)
+            attributes.addAtribute("location_act","INT",isNull = false,isPrimaryKey = false,autoIncrement = false)
             attributes.addAtribute("selected","INTEGER",isNull = false,isPrimaryKey = false,autoIncrement = false)
             return attributes.getList()
         }
@@ -83,11 +82,13 @@ class ConfigTableFuns {
             val tableName : String = getTableConfig()
             val whereClause : String = whereClauseLast()
             val whereClauseValues : List<String> = whereClauseLastList()
-            val list = ManagerDB.getInstance()?.select(tableName, whereClause, whereClauseValues, ConfigTableFuns::convertEntriesConfigs )
+            val list = ManagerDB.getInstance()?.select(tableName, whereClause, whereClauseValues,
+                Companion::convertEntriesConfigs
+            )
             return if (list.isNullOrEmpty()) null else list.first()
         }
 
-        fun newConfig(configOld : Config?, csstatsid : String) {
+        fun newConfig(configOld : Config?, csstatsid : String, bodyWeight: Float, locationSensor: Boolean) {
             val tableName : String = getTableConfig()
             val whereClause : String = whereClauseLast()
             val whereClauseValues : List<String> = whereClauseLastList()
@@ -96,7 +97,7 @@ class ConfigTableFuns {
                 val updateClause = updateTableConfig(configOld.noMoreCurrentVersion())
                 ManagerDB.getInstance()?.update(tableName, updateClause, whereClause, whereClauseValues)
             }
-            ManagerDB.getInstance()?.insert(tableName, updateTableConfig(Config(0,csstatsid, selectedVersion)))
+            ManagerDB.getInstance()?.insert(tableName, updateTableConfig(Config(0,csstatsid, bodyWeight,locationSensor, selectedVersion)))
         }
     }
 }

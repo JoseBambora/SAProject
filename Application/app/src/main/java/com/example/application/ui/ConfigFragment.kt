@@ -10,8 +10,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.application.R
-import com.example.application.data.Config
-import com.example.application.data.ConfigTableFuns
+import com.example.application.data.config.Config
+import com.example.application.data.config.ConfigTableFuns
 
 class ConfigFragment : Fragment() {
 
@@ -29,15 +29,25 @@ class ConfigFragment : Fragment() {
     private fun fillEditText(view : View) {
         if (config != null) {
             view.findViewById<EditText>(R.id.csstatsid)?.setText(config?.csstatsID)
+            view.findViewById<EditText>(R.id.bodyWeight)?.setText(config?.bodyWeight.toString())
+            view.findViewById<com.google.android.material.switchmaterial.SwitchMaterial>(R.id.switchLocationSensor)?.isChecked = true
         }
+    }
+
+    private fun loadConfig() {
+
     }
 
     private fun setOnClicks(view : View) {
         view.findViewById<Button>(R.id.submit_config)?.setOnClickListener {v -> saveConfig()}
+        view.findViewById<Button>(R.id.load_config)?.setOnClickListener {v -> loadConfig()}
+
     }
     private fun saveConfig() {
         val csstatsid = view?.findViewById<EditText>(R.id.csstatsid)?.text.toString()
-        ConfigTableFuns.newConfig(config,csstatsid)
+        val bodyWeight = view?.findViewById<EditText>(R.id.bodyWeight)?.text.toString().toFloat()
+        val sensorLocation = view?.findViewById<com.google.android.material.switchmaterial.SwitchMaterial>(R.id.switchLocationSensor)?.isChecked ?: false
+        ConfigTableFuns.newConfig(config, csstatsid, bodyWeight, sensorLocation)
         Toast.makeText(activity, "Config saved", Toast.LENGTH_SHORT).show()
         findNavController().navigate(R.id.action_to_inicial_menu)
     }

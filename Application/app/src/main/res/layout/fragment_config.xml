@@ -27,20 +27,36 @@
                     android:layout_height="wrap_content"
                     android:text="@string/cs_stats_id"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/csstatsid"
+                    app:layout_constraintEnd_toStartOf="@id/csstatsidTIL"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginEnd="8dp"/>
+                    android:layout_marginEnd="8dp"
+                    style="@style/custom_textview"/>
 
-                <EditText
-                    android:id="@+id/csstatsid"
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/csstatsidTIL"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toEndOf="@id/csStatsIdTextView"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginStart="8dp"/>
+                    android:layout_marginStart="8dp"
+                    android:hint="@string/cs_stats_id"
+                    app:boxStrokeColor="@color/orange"
+                    style="@style/custom_inputlayout">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/csstatsid"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        app:layout_constraintStart_toEndOf="@id/csStatsIdTextView"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+                </com.google.android.material.textfield.TextInputLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -55,20 +71,36 @@
                     android:layout_height="wrap_content"
                     android:text="@string/body_weight"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/bodyWeight"
+                    app:layout_constraintEnd_toStartOf="@id/bodywieidthTIL"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginEnd="8dp"/>
+                    android:layout_marginEnd="8dp"
+                    style="@style/custom_textview"/>
 
-                <EditText
-                    android:id="@+id/bodyWeight"
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/bodywieidthTIL"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toEndOf="@id/bodyWeightTextView"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginStart="8dp"/>
+                    android:layout_marginStart="8dp"
+                    android:hint="@string/body_weight"
+                    app:boxStrokeColor="@color/orange"
+                    style="@style/custom_inputlayout">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/bodyWeight"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        app:layout_constraintStart_toEndOf="@id/csStatsIdTextView"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+                </com.google.android.material.textfield.TextInputLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -82,13 +114,14 @@
                     android:layout_height="wrap_content"
                     android:text="@string/location_sensor"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/switchLocaltionSensor"
+                    app:layout_constraintEnd_toStartOf="@id/switchLocationSensor"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginEnd="8dp"/>
+                    android:layout_marginEnd="8dp"
+                    style="@style/custom_textview"/>
 
                <com.google.android.material.switchmaterial.SwitchMaterial
-                   android:id="@+id/switchLocaltionSensor"
+                   android:id="@+id/switchLocationSensor"
                    android:layout_width="0dp"
                    android:layout_height="wrap_content"
                    app:layout_constraintStart_toEndOf="@id/localitonSensorTextView"
@@ -96,20 +129,45 @@
                    app:layout_constraintTop_toTopOf="parent"
                    app:layout_constraintBottom_toBottomOf="parent"
                    android:gravity="center"
-                   android:layout_marginStart="8dp"/>
+                   android:layout_marginStart="0dp"
+                   app:thumbTint="@color/orange"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
-        
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/submit_config"
+
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:icon="@drawable/baseline_add_24"
-            style="@style/custom_button"
-            android:text="@string/save_config"
-            android:textColor="@color/white"
-            android:textAllCaps="false"/>
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/submit_config"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/save_33"
+                style="@style/custom_button"
+                android:text="@string/save_config"
+                android:textColor="@color/white"
+                android:textAllCaps="false"/>
+
+            <Space
+                android:layout_width="15dp"
+                android:layout_height="0dp"/>
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/load_config"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/load_40"
+                style="@style/custom_button"
+                android:text="@string/load_config"
+                android:textColor="@color/white"
+                android:textAllCaps="false"/>
+
+        </LinearLayout>
+
     </LinearLayout>
 
 
