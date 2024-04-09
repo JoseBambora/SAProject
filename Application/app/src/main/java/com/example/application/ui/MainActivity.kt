@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         binding.fab.setOnClickListener { view ->
             findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.ConfigFragment)
         }
-        initSensors()
+        // initSensors()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

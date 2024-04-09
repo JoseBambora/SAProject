@@ -45,4 +45,15 @@ class Cache {
     override fun toString(): String {
         return stats.toString()
     }
+
+    fun getOverallPerformance() : Performance? {
+        return stats?.getOverallPerformance()
+    }
+
+    fun getMatchesPerformance() : List<Performance>? {
+        return stats?.getMatchPerformance()
+    }
+    fun getDailyPerformance() : Map<Date,Performance>? {
+        return stats?.getDayPerformance()
+    }
 }

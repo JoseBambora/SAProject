@@ -19,12 +19,6 @@ interface API {
 class StatsAPI {
     companion object {
         private val api_url : String = "http://10.0.2.2:5000"
-
-        private fun parseDate(dateString: String?): Date? {
-            if (dateString == null) return null
-            val dateFormat = SimpleDateFormat("EEE dd MMM yy", Locale.ENGLISH)
-            return dateFormat.parse(dateString)
-        }
         private fun create_refroit() : Retrofit {
             return Retrofit.Builder()
                 .baseUrl(api_url)

@@ -52,6 +52,7 @@ class FirstFragment : Fragment() {
         Cache.getInstance().saveInfo(res)
         Log.d("DebugApp","Guardou na cache")
         Log.d("DebugApp","Cache: " + Cache.getInstance().toString())
+        Log.d("DebugApp","Cache: " + Cache.getInstance().getDailyPerformance())
     }
 
     fun erro1(res : Response<Stats>) {
