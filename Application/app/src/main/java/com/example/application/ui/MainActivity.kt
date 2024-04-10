@@ -1,12 +1,16 @@
 package com.example.application.ui
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.pm.PackageManager
+import android.hardware.Sensor
+import android.hardware.SensorManager
 import android.os.Bundle
 import android.os.Looper
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.FrameLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -17,15 +21,13 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.application.R
 import com.example.application.databinding.ActivityMainBinding
 import com.example.application.db.ManagerDB
-import com.example.application.listeners.CoordinatesListener
+import com.example.application.sensors.ActivitySensors
 import com.example.application.ui.utils.Codes
 import com.example.application.ui.utils.Delays
 import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationListener
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
-import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
 
@@ -33,7 +35,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private lateinit var fusedLocationClient : FusedLocationProviderClient
-    private lateinit var myLocationListener: LocationListener
+    private lateinit var myLocationListener: ActivitySensors
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         binding.fab.setOnClickListener { view ->
             findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.ConfigFragment)
         }
-        // initSensors()
+        initSensors()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -78,27 +80,48 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
     }
+    @SuppressLint("SetTextI18n")
+    private fun onChangeActivity(act :String ) {
+        findViewById<TextView>(R.id.textview_first).setText("Current Activity: $act");
+    }
     private fun initSensors() {
-        myLocationListener = CoordinatesListener()
+        myLocationListener = ActivitySensors(::onChangeActivity)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
         checkPermission()
+
     }
 
     private fun hasPermissions() : Boolean {
         val fineLocationPermission = ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
         val coarseLocationPermission = ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION)
+        val activityRecognitionPermission = ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACTIVITY_RECOGNITION)
         return fineLocationPermission == PackageManager.PERMISSION_GRANTED &&
-                coarseLocationPermission == PackageManager.PERMISSION_GRANTED
+                coarseLocationPermission == PackageManager.PERMISSION_GRANTED &&
+                activityRecognitionPermission == PackageManager.PERMISSION_GRANTED
     }
     private fun checkPermission() {
         if (hasPermissions())
             requestLocationUpdates()
         else
-            requestPermissions(arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION), Codes.PERMISSION_LOCATION_SENSORS) // Replace LOCATION_PERMISSION_REQUEST_CODE with a unique integer
+            requestPermissions(arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.ACTIVITY_RECOGNITION), Codes.PERMISSION_LOCATION_SENSORS) // Replace LOCATION_PERMISSION_REQUEST_CODE with a unique integer
+    }
+
+    private fun startPhysicalSensors() {
+        val sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        val stepCounterSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR)
+        val accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+        if(stepCounterSensor != null && accelerometerSensor != null) {
+            sensorManager.registerListener(myLocationListener, stepCounterSensor, SensorManager.SENSOR_DELAY_NORMAL)
+            sensorManager.registerListener(myLocationListener, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL)
+        }
+        else
+            Log.d("DebugApp","Sensors not available")
     }
 
     @SuppressLint("MissingPermission")
     private fun requestLocationUpdates() {
+        startPhysicalSensors()
         fusedLocationClient.requestLocationUpdates(
             LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY,Delays.DELAY_LOCATION_SENSOR).build(),
             myLocationListener,
