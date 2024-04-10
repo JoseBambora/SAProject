@@ -1,6 +1,5 @@
 package com.example.application.data.physicalactivity
 
-import android.util.Log
 import kotlin.math.abs
 
 class PhysicalActivity {

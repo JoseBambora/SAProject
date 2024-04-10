@@ -13,7 +13,6 @@ class ActivitySensors(private val onChange : (String) -> Unit) : LocationListene
     companion object {
         val physicalActivity : PhysicalActivity = PhysicalActivity()
     }
-    private var counter = 0
 
     override fun onLocationChanged(location: Location) {
         Log.d("DebugApp","New Location. Inserting it")

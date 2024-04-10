@@ -1,6 +1,5 @@
 package com.example.application.api
 
-import android.icu.text.SimpleDateFormat
 import com.example.application.data.csstats.Stats
 import retrofit2.Call
 import retrofit2.Callback
@@ -9,8 +8,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
-import java.util.Date
-import java.util.Locale
 
 interface API {
     @GET("/stats/{id}")

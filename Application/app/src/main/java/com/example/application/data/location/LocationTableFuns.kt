@@ -3,7 +3,6 @@ package com.example.application.data.location
 import android.content.ContentValues
 import android.database.Cursor
 import android.location.Location
-import com.example.application.data.config.ConfigTableFuns
 import com.example.application.db.InsertBuilder
 import com.example.application.db.ManagerDB
 

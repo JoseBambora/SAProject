@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.hardware.Sensor
 import android.hardware.SensorManager
+import android.os.Build
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
@@ -12,6 +13,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
@@ -37,6 +39,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var fusedLocationClient : FusedLocationProviderClient
     private lateinit var myLocationListener: ActivitySensors
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ManagerDB.initialize(this.application)
@@ -84,6 +87,7 @@ class MainActivity : AppCompatActivity() {
     private fun onChangeActivity(act :String ) {
         findViewById<TextView>(R.id.textview_first).setText("Current Activity: $act");
     }
+    @RequiresApi(Build.VERSION_CODES.Q)
     private fun initSensors() {
         myLocationListener = ActivitySensors(::onChangeActivity)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
@@ -92,6 +96,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     private fun hasPermissions() : Boolean {
         val fineLocationPermission = ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
         val coarseLocationPermission = ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -100,6 +105,7 @@ class MainActivity : AppCompatActivity() {
                 coarseLocationPermission == PackageManager.PERMISSION_GRANTED &&
                 activityRecognitionPermission == PackageManager.PERMISSION_GRANTED
     }
+    @RequiresApi(Build.VERSION_CODES.Q)
     private fun checkPermission() {
         if (hasPermissions())
             requestLocationUpdates()
