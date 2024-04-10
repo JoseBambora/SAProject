@@ -1,9 +1,7 @@
 package com.example.application.sensors
 
-import android.location.Geocoder
 import android.location.Location
 import com.google.android.gms.location.LocationListener
-import java.util.Locale
 
 class WeatherSensors : LocationListener {
     companion object {
