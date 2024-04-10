@@ -1,4 +1,4 @@
-package com.example.application.api
+package com.example.application.api.csstats
 
 import com.example.application.data.csstats.Stats
 import retrofit2.Call
@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-interface API {
+interface CSStatsAPI {
     @GET("/stats/{id}")
     fun getStats(@Path("id") id : String) : Call<Stats>
 }
@@ -24,7 +24,7 @@ class StatsAPI {
         }
         fun getData(id : String, sucess : (Response<Stats>) -> Unit, unsucess : (Response<Stats>) -> Unit, fail : (Throwable) -> Unit) {
             val retrofit = create_refroit()
-            val service = retrofit.create(API::class.java)
+            val service = retrofit.create(CSStatsAPI::class.java)
             service.getStats(id).enqueue(object : Callback<Stats> {
                 override fun onResponse(call: Call<Stats>, response: Response<Stats>) {
                     if (response.isSuccessful && response.body() != null)

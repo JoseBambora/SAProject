@@ -1,4 +1,4 @@
-package com.example.application.api
+package com.example.application.api.csstats
 
 import android.icu.text.SimpleDateFormat
 import com.google.gson.JsonDeserializationContext

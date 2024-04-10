@@ -24,6 +24,7 @@ import com.example.application.R
 import com.example.application.databinding.ActivityMainBinding
 import com.example.application.db.ManagerDB
 import com.example.application.sensors.ActivitySensors
+import com.example.application.sensors.WeatherSensors
 import com.example.application.ui.utils.Codes
 import com.example.application.ui.utils.Delays
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -37,7 +38,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private lateinit var fusedLocationClient : FusedLocationProviderClient
-    private lateinit var myLocationListener: ActivitySensors
+    private lateinit var activitySensors: ActivitySensors
+    private lateinit var weatherSensors : WeatherSensors
 
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -96,7 +98,8 @@ class MainActivity : AppCompatActivity() {
     }
     @RequiresApi(Build.VERSION_CODES.Q)
     private fun initSensors() {
-        myLocationListener = ActivitySensors(::onChangeActivity)
+        activitySensors = ActivitySensors(::onChangeActivity)
+        weatherSensors = WeatherSensors()
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         checkPermission()
@@ -125,8 +128,8 @@ class MainActivity : AppCompatActivity() {
         val stepCounterSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR)
         val accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
         if(stepCounterSensor != null && accelerometerSensor != null) {
-            sensorManager.registerListener(myLocationListener, stepCounterSensor, SensorManager.SENSOR_DELAY_NORMAL)
-            sensorManager.registerListener(myLocationListener, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL)
+            sensorManager.registerListener(activitySensors, stepCounterSensor, SensorManager.SENSOR_DELAY_NORMAL)
+            sensorManager.registerListener(activitySensors, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL)
         }
         else
             Log.d("DebugApp","Sensors not available")
@@ -136,8 +139,14 @@ class MainActivity : AppCompatActivity() {
     private fun requestLocationUpdates() {
         startPhysicalSensors()
         fusedLocationClient.requestLocationUpdates(
-            LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY,Delays.DELAY_LOCATION_SENSOR).build(),
-            myLocationListener,
+            LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY,Delays.DELAY_LOCATION_SENSOR_ACTIVITY).build(),
+            activitySensors,
+            Looper.getMainLooper()
+        )
+
+        fusedLocationClient.requestLocationUpdates(
+            LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY,Delays.DELAY_LOCATION_SENSOR_WEATHER).build(),
+            weatherSensors,
             Looper.getMainLooper()
         )
     }
