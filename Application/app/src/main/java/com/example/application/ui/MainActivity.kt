@@ -74,12 +74,19 @@ class MainActivity : AppCompatActivity() {
                 findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.ConfigFragment)
                 return true
             }
+            R.id.action_weather -> {
+                findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.weatherFragment)
+                return true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
+        if (navController.currentDestination?.id == R.id.weatherFragment) {
+            supportActionBar?.title = getString(R.string.sa_project)
+        }
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
     }

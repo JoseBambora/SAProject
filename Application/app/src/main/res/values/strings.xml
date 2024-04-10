@@ -66,4 +66,7 @@
     <string name="location_sensor">Location Sensor</string>
     <string name="configuration_menu">Configuration Menu</string>
     <string name="load_config">Load Config</string>
+    <string name="weather" />
+    <string name="location">Location</string>
+    <string name="temperature" />
 </resources>

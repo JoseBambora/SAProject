@@ -8,4 +8,9 @@
         android:title="@string/action_settings"
         android:icon="@drawable/settings_84"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_weather"
+        android:title="@string/weather"
+        android:icon="@drawable/baseline_cloud_24"
+        app:showAsAction="ifRoom" />
 </menu>
