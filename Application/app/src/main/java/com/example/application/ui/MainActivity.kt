@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-        binding.fab.setOnClickListener { view ->
+        binding.fab.setOnClickListener { _ ->
             findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.ConfigFragment)
         }
         initSensors()
@@ -94,7 +94,7 @@ class MainActivity : AppCompatActivity() {
     }
     @SuppressLint("SetTextI18n")
     private fun onChangeActivity(act :String ) {
-        findViewById<TextView>(R.id.textview_first).setText("Current Activity: $act");
+        findViewById<TextView>(R.id.textview_first).setText("Current Activity: $act")
     }
     @RequiresApi(Build.VERSION_CODES.Q)
     private fun initSensors() {
