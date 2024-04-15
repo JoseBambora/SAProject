@@ -13,7 +13,7 @@ import java.util.*
 import android.widget.TextView
 import com.example.application.api.openweather.OpenWeatherAPI
 import com.example.application.data.weather.Weather
-import com.example.application.sensors.WeatherSensors
+import com.example.application.sensors.WeatherSensorsHelper
 import retrofit2.Response
 
 class WeatherFragment : Fragment() {
@@ -29,7 +29,7 @@ class WeatherFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         displayLocation()
-        fetchWeather(WeatherSensors.latitude, WeatherSensors.longitude)
+        fetchWeather(WeatherSensorsHelper.latitude, WeatherSensorsHelper.longitude)
         //updateSensorData()
     }
 
@@ -37,8 +37,8 @@ class WeatherFragment : Fragment() {
     private fun displayLocation() {
         val geocoder = Geocoder(requireContext(), Locale.getDefault())
         val addresses = geocoder.getFromLocation(
-            WeatherSensors.latitude,
-            WeatherSensors.longitude, 1)
+            WeatherSensorsHelper.latitude,
+            WeatherSensorsHelper.longitude, 1)
         if (!addresses.isNullOrEmpty()) {
             val cityName = addresses[0].locality
             val countryName = addresses[0].countryName
@@ -56,11 +56,11 @@ class WeatherFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     private fun updateSensorData() {
         view?.findViewById<TextView>(R.id.ambientTemperatureTextView)?.text =
-            "Local Temperature: ${WeatherSensors.ambientTemperature} ºC"
+            "Local Temperature: ${WeatherSensorsHelper.ambientTemperature} ºC"
         view?.findViewById<TextView>(R.id.pressureTextView)?.text =
-            "Pressure: ${WeatherSensors.pressure} hPa"
+            "Pressure: ${WeatherSensorsHelper.pressure} hPa"
         view?.findViewById<TextView>(R.id.humidityTextView)?.text =
-            "Humidity: ${WeatherSensors.relativeHumidity} %"
+            "Humidity: ${WeatherSensorsHelper.relativeHumidity} %"
     }
 
     @SuppressLint("SetTextI18n")
