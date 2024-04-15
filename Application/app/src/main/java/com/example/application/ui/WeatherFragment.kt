@@ -1,5 +1,6 @@
 package com.example.application.ui
 
+import android.annotation.SuppressLint
 import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
@@ -28,36 +29,57 @@ class WeatherFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         displayLocation()
-        fetchWeather(WeatherSensors.latitude,WeatherSensors.longitude)
+        fetchWeather(WeatherSensors.latitude, WeatherSensors.longitude)
+        //updateSensorData()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun displayLocation() {
         val geocoder = Geocoder(requireContext(), Locale.getDefault())
         val addresses = geocoder.getFromLocation(
             WeatherSensors.latitude,
             WeatherSensors.longitude, 1)
-        val cityName = addresses?.get(0)?.locality
-        val countryName = addresses?.get(0)?.countryName
-        val locationText = "$cityName, $countryName"
-        // Display the location in your UI elements
-        val locationTextView = view?.findViewById<TextView>(R.id.locationTextView)
-        if (locationTextView != null) {
-            locationTextView.text = locationText
+        if (!addresses.isNullOrEmpty()) {
+            val cityName = addresses[0].locality
+            val countryName = addresses[0].countryName
+            val locationText = "$cityName, $countryName"
+            // Display the location in your UI elements
+            val locationTextView = view?.findViewById<TextView>(R.id.locationTextView)
+            locationTextView?.text = "Location: $locationText"
+            updateSensorData()
+        } else {
+            Log.e("WeatherFragment", "No address found")
         }
     }
 
-    private fun displayData(data : Response<Weather>) {
-        val weather = data.body()
-        weather?.main?.temperature?.let { view?.findViewById<TextView>(R.id.temperatureTextView)?.text = "$it ºC" }
-    }
-    private fun error(data : Response<Weather>) {
-        Log.d("DebugApp","Error getting the weather data")
-    }
-    private fun fail(t : Throwable) {
-        Log.d("DebugApp","Error getting the weather data " + t.message)
 
+    @SuppressLint("SetTextI18n")
+    private fun updateSensorData() {
+        view?.findViewById<TextView>(R.id.ambientTemperatureTextView)?.text =
+            "Local Temperature: ${WeatherSensors.ambientTemperature} ºC"
+        view?.findViewById<TextView>(R.id.pressureTextView)?.text =
+            "Pressure: ${WeatherSensors.pressure} hPa"
+        view?.findViewById<TextView>(R.id.humidityTextView)?.text =
+            "Humidity: ${WeatherSensors.relativeHumidity} %"
     }
+
+    @SuppressLint("SetTextI18n")
+    private fun displayData(data: Response<Weather>) {
+        val weather = data.body()
+        weather?.main?.temperature?.let {
+            view?.findViewById<TextView>(R.id.temperatureTextView)?.text = "Ambient Temperature: $it ºC"
+        }
+    }
+
+    private fun error(data: Response<Weather>) {
+        Log.d("DebugApp", "Error getting the weather data")
+    }
+
+    private fun fail(t: Throwable) {
+        Log.d("DebugApp", "Error getting the weather data " + t.message)
+    }
+
     private fun fetchWeather(latitude: Double, longitude: Double) {
-        OpenWeatherAPI.getData(latitude,longitude, ::displayData, ::error, ::fail)
+        OpenWeatherAPI.getData(latitude, longitude, ::displayData, ::error, ::fail)
     }
 }

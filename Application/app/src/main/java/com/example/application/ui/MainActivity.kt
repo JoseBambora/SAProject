@@ -99,7 +99,8 @@ class MainActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.Q)
     private fun initSensors() {
         activitySensors = ActivitySensors(::onChangeActivity)
-        weatherSensors = WeatherSensors()
+        val sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        weatherSensors = WeatherSensors(sensorManager)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         checkPermission()

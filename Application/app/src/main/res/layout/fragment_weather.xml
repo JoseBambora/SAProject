@@ -25,4 +25,41 @@
         android:textStyle="bold"
         android:visibility="visible" />
 
+
+    <TextView
+        android:id="@+id/ambientTemperatureTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/temperatureTextView"
+        android:layout_centerInParent="true"
+        android:text="@string/temperature"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/pressureTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ambientTemperatureTextView"
+        android:layout_centerHorizontal="true"
+        android:text=""
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/humidityTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pressureTextView"
+        android:layout_centerHorizontal="true"
+        android:text=""
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:visibility="visible" />
+
 </RelativeLayout>
