@@ -7,7 +7,7 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.example.application.data.config.ConfigTableFuns
-import com.example.application.data.location.LocationTableFuns
+import com.example.application.data.physicalactivity.ActivityTableFuns
 
 /*
  * Generic Manager for SQLite database.
@@ -27,21 +27,18 @@ class ManagerDB(context: Context,
                 databaseVersion : Int) : SQLiteOpenHelper(context, databaseName, null, databaseVersion)  {
     companion object {
         var mdb : ManagerDB? = null
-
         fun initialize(app : Application) {
             if (mdb == null)
-                mdb = ManagerDB(app,"DatabaseSA",1)
+                mdb = ManagerDB(app,"DatabaseSA",2)
         }
-
         fun getInstance() : ManagerDB? {
             return mdb
         }
-
     }
     private fun getTables() : List<Pair<String,List<String>>> {
         val res : MutableList<Pair<String,List<String>>> = mutableListOf()
         res.add(Pair(ConfigTableFuns.getTableConfig(), ConfigTableFuns.createTableConfig()))
-        res.add(Pair(LocationTableFuns.getTableLocation(), LocationTableFuns.createTableLocation()))
+        res.add(Pair(ActivityTableFuns.getTableLocation(), ActivityTableFuns.createTableLocation()))
         return res
     }
     override fun onCreate(db: SQLiteDatabase?) {

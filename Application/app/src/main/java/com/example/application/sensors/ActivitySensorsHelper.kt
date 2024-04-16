@@ -12,8 +12,8 @@ import android.os.Looper
 import com.google.android.gms.location.LocationListener;
 import android.util.Log
 import androidx.core.content.ContextCompat
-import com.example.application.data.location.LocationTableFuns
-import com.example.application.data.physicalactivity.PhysicalActivity
+import com.example.application.data.physicalactivity.ActivityTableFuns
+import com.example.application.data.physicalactivity.ActivitySensorsAux
 import com.example.application.ui.utils.Delays
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest
@@ -26,6 +26,7 @@ class ActivitySensorsHelper(val context: Context) : LocationListener, SensorEven
     private val accelerometerSensor : Sensor?
     private val stepCounterSensor : Sensor?
     private val fusedLocationClient : FusedLocationProviderClient
+    val physicalActivity : ActivitySensorsAux = ActivitySensorsAux()
 
     init {
         sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
@@ -33,25 +34,18 @@ class ActivitySensorsHelper(val context: Context) : LocationListener, SensorEven
         stepCounterSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
     }
-    companion object {
-        val physicalActivity : PhysicalActivity = PhysicalActivity()
-    }
 
     override fun onLocationChanged(location: Location) {
-        Log.d("DebugApp","New Location Activity.")
-        LocationTableFuns.newLocation(location)
+        physicalActivity.newLocation(location)
+        ActivityTableFuns.newActivity(physicalActivity.createActivity())
     }
 
 
     override fun onSensorChanged(event: SensorEvent) {
-        if (event.sensor.type == Sensor.TYPE_STEP_DETECTOR) {
-            Log.d("DebugApp","New Step Counter")
+        if (event.sensor.type == Sensor.TYPE_STEP_DETECTOR)
             physicalActivity.incrementStepCounter()
-        }
-        else if (event.sensor.type == Sensor.TYPE_ACCELEROMETER) {
-            // Log.d("DebugApp","New Accelerometer")
+        else if (event.sensor.type == Sensor.TYPE_ACCELEROMETER)
             physicalActivity.newActivity(event.values[0], event.values[1], event.values[2])
-        }
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}

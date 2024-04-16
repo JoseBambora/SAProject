@@ -9,14 +9,26 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
+import com.anychart.AnyChart
+import com.anychart.AnyChartView
+import com.anychart.chart.common.dataentry.DataEntry
+import com.anychart.chart.common.dataentry.ValueDataEntry
+import com.anychart.enums.HoverMode
+import com.anychart.enums.TooltipPositionMode
+import com.anychart.core.cartesian.series.Column
+import com.anychart.enums.Anchor
+import com.anychart.enums.Position
 import com.example.application.R
 import com.example.application.api.csstats.StatsAPI
-import com.example.application.data.csstats.Cache
 import com.example.application.data.config.ConfigTableFuns
+import com.example.application.data.csstats.Cache
+import com.example.application.data.csstats.Performance
 import com.example.application.data.csstats.Stats
+import com.example.application.data.physicalactivity.ActivityTableFuns
+import com.example.application.data.physicalactivity.DailyActivity
 import com.example.application.databinding.FragmentFirstBinding
 import retrofit2.Response
+
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -39,13 +51,63 @@ class FirstFragment : Fragment() {
 
     }
 
+    private fun getDataChartActivity(): List<Pair<Performance, DailyActivity?>> {
+        val activities = ActivityTableFuns.getDailyActivity()
+        val association = mutableListOf<Pair<Performance, DailyActivity?>>()
+        Cache.getInstance().getDailyPerformance()?.forEach {
+            association.add(Pair(it.value, activities[it.key]))
+        }
+        return association
+    }
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        teste_api()
-        binding.buttonFirst.setOnClickListener {
-            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
-        }
+        // teste_api()
+        // binding.buttonFirst.setOnClickListener {
+        //     findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+        // }
+        val anyChartView: AnyChartView = view.findViewById(R.id.teste)
+        anyChartView.setProgressBar(view.findViewById(R.id.progress_bar))
+
+        val cartesian = AnyChart.column()
+
+        val data: MutableList<DataEntry> = ArrayList()
+        data.add(ValueDataEntry("Rouge", 80540))
+        data.add(ValueDataEntry("Foundation", 94190))
+        data.add(ValueDataEntry("Mascara", 102610))
+        data.add(ValueDataEntry("Lip gloss", 110430))
+        data.add(ValueDataEntry("Lipstick", 128000))
+        data.add(ValueDataEntry("Nail polish", 143760))
+        data.add(ValueDataEntry("Eyebrow pencil", 170670))
+        data.add(ValueDataEntry("Eyeliner", 213210))
+        data.add(ValueDataEntry("Eyeshadows", 249980))
+
+        val column: Column = cartesian.column(data)
+
+        column.tooltip()
+            .titleFormat("{%X}")
+            .position(Position.CENTER_BOTTOM)
+            .anchor(Anchor.CENTER_BOTTOM)
+            .offsetX(0.0)
+            .offsetY(5.0)
+            .format("\${%Value}{groupsSeparator: }")
+
+        cartesian.animation(true)
+        cartesian.title("Top 10 Cosmetic Products by Revenue")
+
+        cartesian.yScale().minimum(0.0)
+
+        cartesian.yAxis(0).labels().format("\${%Value}{groupsSeparator: }")
+
+        cartesian.tooltip().positionMode(TooltipPositionMode.POINT)
+        cartesian.interactivity().hoverMode(HoverMode.BY_X)
+
+        cartesian.xAxis(0).title("Product")
+        cartesian.yAxis(0).title("Revenue")
+
+        anyChartView.setChart(cartesian)
+
     }
     @RequiresApi(Build.VERSION_CODES.O)
     fun suc(res : Response<Stats>) {
