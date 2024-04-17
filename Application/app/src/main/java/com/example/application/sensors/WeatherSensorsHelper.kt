@@ -21,27 +21,17 @@
     class WeatherSensorsHelper(
         val context : Context
     ) : LocationListener, SensorEventListener {
-        private val sensorManager : SensorManager
-        private val temperatureSensor : Sensor?
-        private val pressureSensor: Sensor?
-        private val humiditySensor : Sensor?
-        private val fusedLocationClient : FusedLocationProviderClient
+        private val sensorManager : SensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        private val pressureSensor: Sensor? = sensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE)
+        private val humiditySensor : Sensor? = sensorManager.getDefaultSensor(Sensor.TYPE_RELATIVE_HUMIDITY)
+        private val fusedLocationClient : FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
 
         companion object {
             var latitude: Double = 0.0
             var longitude: Double = 0.0
             var altitude: Double = 0.0
-            var ambientTemperature: Float = 0.0f
             var pressure: Float = 0.0f
             var relativeHumidity: Float = 0.0f
-        }
-
-        init {
-            sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
-            temperatureSensor = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE)
-            pressureSensor = sensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE)
-            humiditySensor = sensorManager.getDefaultSensor(Sensor.TYPE_RELATIVE_HUMIDITY)
-            fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
         }
 
         override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
@@ -50,7 +40,6 @@
 
         override fun onSensorChanged(event: SensorEvent) {
             when (event.sensor.type) {
-                Sensor.TYPE_AMBIENT_TEMPERATURE -> ambientTemperature = event.values[0]
                 Sensor.TYPE_PRESSURE -> pressure = event.values[0]
                 Sensor.TYPE_RELATIVE_HUMIDITY -> relativeHumidity = event.values[0]
             }
@@ -64,7 +53,6 @@
         }
         @SuppressLint("MissingPermission")
         fun onStart() {
-            sensorManager.registerListener(this, temperatureSensor, SensorManager.SENSOR_DELAY_NORMAL)
             sensorManager.registerListener(this, pressureSensor, SensorManager.SENSOR_DELAY_NORMAL)
             sensorManager.registerListener(this, humiditySensor, SensorManager.SENSOR_DELAY_NORMAL)
             fusedLocationClient.requestLocationUpdates(

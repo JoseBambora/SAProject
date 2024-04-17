@@ -55,13 +55,22 @@ class WeatherFragment : Fragment() {
 
     @SuppressLint("SetTextI18n")
     private fun updateSensorData() {
-        view?.findViewById<TextView>(R.id.ambientTemperatureTextView)?.text =
-            "Local Temperature: ${WeatherSensorsHelper.ambientTemperature} ºC"
-        view?.findViewById<TextView>(R.id.pressureTextView)?.text =
-            "Pressure: ${WeatherSensorsHelper.pressure} hPa"
-        view?.findViewById<TextView>(R.id.humidityTextView)?.text =
-            "Humidity: ${WeatherSensorsHelper.relativeHumidity} %"
+
+        WeatherSensorsHelper.pressure.takeIf { it != 0.0f }?.let {
+            view?.findViewById<TextView>(R.id.pressureTextView)?.apply {
+                text = "Pressure: $it hPa"
+                visibility = View.VISIBLE
+            }
+        }
+
+        WeatherSensorsHelper.relativeHumidity.takeIf { it != 0.0f }?.let {
+            view?.findViewById<TextView>(R.id.humidityTextView)?.apply {
+                text = "Humidity: $it %"
+                visibility = View.VISIBLE
+            }
+        }
     }
+
 
     @SuppressLint("SetTextI18n")
     private fun displayData(data: Response<Weather>) {
