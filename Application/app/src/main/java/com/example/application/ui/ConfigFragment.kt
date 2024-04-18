@@ -10,8 +10,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.application.R
-import com.example.application.data.config.Config
-import com.example.application.data.config.ConfigTableFuns
+import com.example.application.model.config.Config
+import com.example.application.model.config.ConfigTableFuns
 
 class ConfigFragment : Fragment() {
 

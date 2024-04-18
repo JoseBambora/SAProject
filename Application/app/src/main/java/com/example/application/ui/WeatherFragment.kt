@@ -11,9 +11,9 @@ import androidx.fragment.app.Fragment
 import com.example.application.R
 import java.util.*
 import android.widget.TextView
-import com.example.application.api.openweather.OpenWeatherAPI
-import com.example.application.data.weather.Weather
-import com.example.application.sensors.WeatherSensorsHelper
+import com.example.application.network.openweather.OpenWeatherAPI
+import com.example.application.model.weather.Weather
+import com.example.application.utils.WeatherSensorsHelper
 import retrofit2.Response
 
 class WeatherFragment : Fragment() {
