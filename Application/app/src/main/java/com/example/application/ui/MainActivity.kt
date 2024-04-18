@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +19,7 @@ import com.example.application.databinding.ActivityMainBinding
 import com.example.application.db.ManagerDB
 import com.example.application.sensors.ActivitySensorsHelper
 import com.example.application.sensors.WeatherSensorsHelper
+import com.example.application.sensors.LightSensorsHelper
 import com.example.application.ui.utils.Codes
 
 class MainActivity : AppCompatActivity() {
@@ -27,7 +29,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var activitySensorsHelper: ActivitySensorsHelper
     private lateinit var weatherSensorsHelper : WeatherSensorsHelper
-
+    private lateinit var lightSensorsHelper: LightSensorsHelper
+    private lateinit var lightIntensityTextView: TextView
 
     private var permissionsGranted : Boolean = false
 
@@ -50,6 +53,12 @@ class MainActivity : AppCompatActivity() {
         }
         activitySensorsHelper = ActivitySensorsHelper(this)
         weatherSensorsHelper = WeatherSensorsHelper(this)
+
+        // Initialize LightSensorsHelper
+        lightSensorsHelper = LightSensorsHelper(this)
+
+        // Get a reference to the TextView
+        lightIntensityTextView = findViewById(R.id.lightIntensityTextView)
 
         // Check and request permission for light sensor
         checkPermission()
@@ -83,6 +92,7 @@ class MainActivity : AppCompatActivity() {
         if(permissionsGranted) {
             activitySensorsHelper.onStart()
             weatherSensorsHelper.onStart()
+            lightSensorsHelper.start()
         }
     }
 
@@ -91,7 +101,13 @@ class MainActivity : AppCompatActivity() {
         if(permissionsGranted) {
             activitySensorsHelper.onStop()
             weatherSensorsHelper.onStop()
+            lightSensorsHelper.stop()
         }
+    }
+
+    // Update the TextView with the current light intensity value
+    fun updateLightIntensityTextView(intensity: Float) {
+        lightIntensityTextView.text = "Light Intensity: $intensity Lux"
     }
 
     override fun onSupportNavigateUp(): Boolean {
