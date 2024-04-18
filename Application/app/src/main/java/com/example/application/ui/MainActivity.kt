@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var activitySensorsHelper: ActivitySensorsHelper
     private lateinit var weatherSensorsHelper : WeatherSensorsHelper
 
+
     private var permissionsGranted : Boolean = false
 
     @RequiresApi(Build.VERSION_CODES.Q)
@@ -49,6 +50,8 @@ class MainActivity : AppCompatActivity() {
         }
         activitySensorsHelper = ActivitySensorsHelper(this)
         weatherSensorsHelper = WeatherSensorsHelper(this)
+
+        // Check and request permission for light sensor
         checkPermission()
     }
 
@@ -104,7 +107,10 @@ class MainActivity : AppCompatActivity() {
         if (activitySensorsHelper.checkPermissions(this) && weatherSensorsHelper.checkPermissions(this))
             permissionsGranted = true
         else
-            requestPermissions(arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.ACTIVITY_RECOGNITION), Codes.PERMISSION_LOCATION_SENSORS)
+            requestPermissions(arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION,
+                android.Manifest.permission.ACCESS_COARSE_LOCATION,
+                android.Manifest.permission.ACTIVITY_RECOGNITION),
+                Codes.PERMISSION_LOCATION_SENSORS)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
