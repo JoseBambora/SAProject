@@ -24,8 +24,8 @@ import com.example.application.data.config.ConfigTableFuns
 import com.example.application.data.csstats.Cache
 import com.example.application.data.csstats.Performance
 import com.example.application.data.csstats.Stats
-import com.example.application.data.physicalactivity.ActivityTableFuns
 import com.example.application.data.physicalactivity.DailyActivity
+import com.example.application.data.physicalactivity.DailyActivityTableFuns
 import com.example.application.databinding.FragmentFirstBinding
 import retrofit2.Response
 
@@ -49,15 +49,6 @@ class FirstFragment : Fragment() {
         _binding = FragmentFirstBinding.inflate(inflater, container, false)
         return binding.root
 
-    }
-
-    private fun getDataChartActivity(): List<Pair<Performance, DailyActivity?>> {
-        val activities = ActivityTableFuns.getDailyActivity()
-        val association = mutableListOf<Pair<Performance, DailyActivity?>>()
-        Cache.getInstance().getDailyPerformance()?.forEach {
-            association.add(Pair(it.value, activities[it.key]))
-        }
-        return association
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
