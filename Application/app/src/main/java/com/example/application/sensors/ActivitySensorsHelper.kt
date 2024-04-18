@@ -9,10 +9,8 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.location.Location
 import android.os.Looper
-import com.google.android.gms.location.LocationListener;
-import android.util.Log
+import com.google.android.gms.location.LocationListener
 import androidx.core.content.ContextCompat
-import com.example.application.data.physicalactivity.ActivityTableFuns
 import com.example.application.data.physicalactivity.ActivitySensorsAux
 import com.example.application.ui.utils.Delays
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -26,7 +24,7 @@ class ActivitySensorsHelper(val context: Context) : LocationListener, SensorEven
     private val accelerometerSensor : Sensor?
     private val stepCounterSensor : Sensor?
     private val fusedLocationClient : FusedLocationProviderClient
-    val physicalActivity : ActivitySensorsAux = ActivitySensorsAux()
+    private val physicalActivity : ActivitySensorsAux = ActivitySensorsAux()
 
     init {
         sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
@@ -37,7 +35,6 @@ class ActivitySensorsHelper(val context: Context) : LocationListener, SensorEven
 
     override fun onLocationChanged(location: Location) {
         physicalActivity.newLocation(location)
-        ActivityTableFuns.newActivity(physicalActivity.createActivity())
     }
 
 
@@ -52,18 +49,22 @@ class ActivitySensorsHelper(val context: Context) : LocationListener, SensorEven
 
     @SuppressLint("MissingPermission")
     fun onStart() {
-        sensorManager.registerListener(this, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL)
-        sensorManager.registerListener(this, stepCounterSensor, SensorManager.SENSOR_DELAY_NORMAL)
-        fusedLocationClient.requestLocationUpdates(
-            LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, Delays.DELAY_LOCATION_SENSOR_ACTIVITY).build(),
-            this,
-            Looper.getMainLooper()
-        )
+        if(checkPermissions(context)) {
+            sensorManager.registerListener(this, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL)
+            sensorManager.registerListener(this, stepCounterSensor, SensorManager.SENSOR_DELAY_NORMAL)
+            fusedLocationClient.requestLocationUpdates(
+                LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, Delays.DELAY_LOCATION_SENSOR_ACTIVITY).build(),
+                this,
+                Looper.getMainLooper()
+            )
+        }
     }
 
     fun onStop() {
-        sensorManager.unregisterListener(this)
-        fusedLocationClient.removeLocationUpdates(this)
+        if(checkPermissions(context)) {
+            sensorManager.unregisterListener(this)
+            fusedLocationClient.removeLocationUpdates(this)
+        }
     }
 
     fun checkPermissions(context : Context) : Boolean {
