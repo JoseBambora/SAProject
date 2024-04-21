@@ -16,9 +16,14 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.application.databinding.ActivityMainBinding
 import com.example.application.data.ManagerDB
+import com.example.application.model.config.ConfigTableFuns
+import com.example.application.model.csstats.Cache
+import com.example.application.model.csstats.Stats
+import com.example.application.network.csstats.StatsAPI
 import com.example.application.utils.ActivitySensors.ActivitySensorsHelper
 import com.example.application.utils.WeatherSensorsHelper
 import com.example.application.utils.LightSensorsHelper
+import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
     private val PERMISSION_LOCATION_SENSORS : Int = 1000
@@ -31,6 +36,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var lightSensorsHelper: LightSensorsHelper
 
     private var permissionsGranted : Boolean = false
+
+    fun erro1(res : Response<Stats>) {
+        Log.d("DebugApp","Error 1 when contacting the API")
+    }
+    fun erro2(t : Throwable) {
+        Log.d("DebugApp","Error 2 when contacting the API " + t.message.toString())
+    }
 
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,6 +70,20 @@ class MainActivity : AppCompatActivity() {
 
         // Check and request permission for light sensor
         checkPermission()
+
+        val config = ConfigTableFuns.getLastVersion()
+        val cache = Cache.getInstance()
+
+        if(config != null) {
+            if (cache.needsUpdate()) {
+                Toast.makeText(this,"Dados não estão em cache", Toast.LENGTH_SHORT).show()
+                StatsAPI.getData(config.csstatsID, cache::saveInfo,::erro1, ::erro2)
+            }
+            else
+                Toast.makeText(this,"Dados já em cache", Toast.LENGTH_SHORT).show()
+        }
+        else
+            Toast.makeText(this, "No Configs in the system", Toast.LENGTH_SHORT).show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

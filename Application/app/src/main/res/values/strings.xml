@@ -69,4 +69,5 @@
     <string name="weather" />
     <string name="location">Location</string>
     <string name="temperature" />
+    <string name="graphs">Graphs</string>
 </resources>

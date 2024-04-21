@@ -16,20 +16,14 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <com.anychart.AnyChartView
-                android:id="@+id/teste"
-                android:layout_width="match_parent"
-                android:layout_height="200dp" />
-
-            <ProgressBar
-                android:id="@+id/progress_bar"
+            <Button
+                android:id="@+id/graphsButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:text="@string/graphs"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                />
+                app:layout_constraintTop_toTopOf="parent" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
