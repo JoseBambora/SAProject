@@ -39,10 +39,7 @@
         }
 
         override fun onSensorChanged(event: SensorEvent) {
-            when (event.sensor.type) {
-                Sensor.TYPE_PRESSURE -> pressure = event.values[0]
-                Sensor.TYPE_RELATIVE_HUMIDITY -> relativeHumidity = event.values[0]
-            }
+            //Not needed
         }
 
         override fun onLocationChanged(p0: Location) {

@@ -69,4 +69,11 @@
     <string name="weather" />
     <string name="location">Location</string>
     <string name="temperature" />
+    <string name="ground_level" />
+    <string name="sea_level" />
+    <string name="min_temperature" />
+    <string name="max_temperature" />
+    <string name="humidity" />
+    <string name="pressure" />
+    <string name="feelslike" />
 </resources>
