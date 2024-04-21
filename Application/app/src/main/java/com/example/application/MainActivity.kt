@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -16,7 +15,10 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.application.databinding.ActivityMainBinding
 import com.example.application.data.ManagerDB
+import com.example.application.utils.AccelerometerSensorsHelper
 import com.example.application.utils.ActivitySensors.ActivitySensorsHelper
+import com.example.application.utils.GravitySensorsHelper
+import com.example.application.utils.GyroscopeSensorsHelper
 import com.example.application.utils.WeatherSensorsHelper
 import com.example.application.utils.LightSensorsHelper
 
@@ -29,6 +31,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var activitySensorsHelper: ActivitySensorsHelper
     private lateinit var weatherSensorsHelper : WeatherSensorsHelper
     private lateinit var lightSensorsHelper: LightSensorsHelper
+    private lateinit var accelerometerSensorsHelper: AccelerometerSensorsHelper
+    private lateinit var gyroscopeSensorsHelper: GyroscopeSensorsHelper
+    private lateinit var gravitySensorsHelper: GravitySensorsHelper
 
     private var permissionsGranted : Boolean = false
 
@@ -54,7 +59,12 @@ class MainActivity : AppCompatActivity() {
 
         // Initialize LightSensorsHelper
         lightSensorsHelper = LightSensorsHelper(this)
-
+        // Initialize AccelerometerHelper
+        accelerometerSensorsHelper = AccelerometerSensorsHelper(this)
+        // Initialize GyroscopeSensorHelper
+        gyroscopeSensorsHelper = GyroscopeSensorsHelper(this)
+        // Initialize GravitySensorHelper
+        gravitySensorsHelper = GravitySensorsHelper(this)
 
         // Check and request permission for light sensor
         checkPermission()
@@ -89,6 +99,9 @@ class MainActivity : AppCompatActivity() {
             activitySensorsHelper.onStart()
             weatherSensorsHelper.onStart()
             lightSensorsHelper.start()
+            accelerometerSensorsHelper.start()
+            gyroscopeSensorsHelper.start()
+            gravitySensorsHelper.start()
         }
     }
 
@@ -98,6 +111,9 @@ class MainActivity : AppCompatActivity() {
             activitySensorsHelper.onStop()
             weatherSensorsHelper.onStop()
             lightSensorsHelper.stop()
+            accelerometerSensorsHelper.stop()
+            gyroscopeSensorsHelper.stop()
+            gravitySensorsHelper.stop()
         }
     }
 
