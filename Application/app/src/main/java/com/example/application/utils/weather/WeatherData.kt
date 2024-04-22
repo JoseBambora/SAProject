@@ -1,4 +1,4 @@
-package com.example.application.utils
+package com.example.application.utils.weather
 
 import android.util.Log
 import com.example.application.model.weather.Coord

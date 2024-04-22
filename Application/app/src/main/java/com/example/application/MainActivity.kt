@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -17,7 +16,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.application.databinding.ActivityMainBinding
 import com.example.application.data.ManagerDB
 import com.example.application.utils.ActivitySensors.ActivitySensorsHelper
-import com.example.application.utils.WeatherSensorsHelper
+import com.example.application.utils.weather.WeatherSensorsHelper
 import com.example.application.utils.LightSensorsHelper
 
 class MainActivity : AppCompatActivity() {

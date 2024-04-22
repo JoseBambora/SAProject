@@ -13,7 +13,7 @@ import java.util.*
 import android.widget.TextView
 import com.example.application.network.openweather.OpenWeatherAPI
 import com.example.application.model.weather.Weather
-import com.example.application.utils.WeatherSensorsHelper
+import com.example.application.utils.weather.WeatherSensorsHelper
 import retrofit2.Response
 
 class WeatherFragment : Fragment() {
