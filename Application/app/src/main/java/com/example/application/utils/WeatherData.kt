@@ -11,7 +11,7 @@ class WeatherData {
 
     fun addWeather(weather : Weather) {list.add(weather)}
 
-    public fun getAvgWeather(): Weather? {
+    fun getAvgWeather(): Weather? {
         if (list.isNotEmpty()) {
             val mainAttributes = list.map { it.main }
             val coordAttributes = list.map { it.coords }
@@ -46,6 +46,14 @@ class WeatherData {
             Log.d("WeatherDataWriter", "Empty Data")
             return null
         }
+    }
+
+    fun reset() {
+        list.clear()
+    }
+
+    companion object {
+        val instance : WeatherData = WeatherData()
     }
 
 

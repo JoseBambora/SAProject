@@ -4,7 +4,7 @@ import android.content.ContentValues
 import android.database.Cursor
 import android.os.Build
 import androidx.annotation.RequiresApi
-import com.example.application.model.physicalactivity.DailyActivity
+import com.example.application.model.DailyActivity
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -34,8 +34,8 @@ class DailyActivityTableFuns {
             val startTime = cursor.getString(cursor.getColumnIndexOrThrow("start_time"))
             val endTime = cursor.getString(cursor.getColumnIndexOrThrow("end_time"))
             val avg_temperature = cursor.getFloat(cursor.getColumnIndexOrThrow("avg_temperature"))
-            val avg_humidity = cursor.getFloat(cursor.getColumnIndexOrThrow("avg_humidity"))
-            val avg_pressure = cursor.getFloat(cursor.getColumnIndexOrThrow("avg_pressure"))
+            val avg_humidity = cursor.getInt(cursor.getColumnIndexOrThrow("avg_humidity"))
+            val avg_pressure = cursor.getInt(cursor.getColumnIndexOrThrow("avg_pressure"))
             return DailyActivity(distance,steps, LocalDate.parse(date), LocalDateTime.parse(startTime),  LocalDateTime.parse(endTime),avg_temperature,avg_humidity,avg_pressure)
         }
 
@@ -67,8 +67,8 @@ class DailyActivityTableFuns {
             attributes.addAtribute("start_time","STRING",isNull = false,isPrimaryKey = false,autoIncrement = false)
             attributes.addAtribute("end_time","STRING",isNull = false,isPrimaryKey = false,autoIncrement = false)
             attributes.addAtribute("avg_temperature","FLOAT",isNull = false,isPrimaryKey = false,autoIncrement = false)
-            attributes.addAtribute("avg_pressure","FLOAT",isNull = false,isPrimaryKey = false,autoIncrement = false)
-            attributes.addAtribute("avg_humidity","FLOAT",isNull = false,isPrimaryKey = false,autoIncrement = false)
+            attributes.addAtribute("avg_pressure","INT",isNull = false,isPrimaryKey = false,autoIncrement = false)
+            attributes.addAtribute("avg_humidity","INT",isNull = false,isPrimaryKey = false,autoIncrement = false)
             return attributes.getList()
         }
 

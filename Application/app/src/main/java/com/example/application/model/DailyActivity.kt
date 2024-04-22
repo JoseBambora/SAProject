@@ -1,4 +1,4 @@
-package com.example.application.model.physicalactivity
+package com.example.application.model
 
 import android.location.Location
 import java.time.LocalDate
@@ -17,8 +17,8 @@ class DailyActivity(
     val startSleepTime : LocalDateTime,
     val endSleepTime : LocalDateTime,
     val avg_temperature : Float,
-    val avg_humidity : Float,
-    val avg_pressure : Float){
+    val avg_humidity : Int,
+    val avg_pressure : Int){
 
     fun getPerformance(): Float {
         val distanceWeight = 2
@@ -39,20 +39,5 @@ class DailyActivity(
         val score = (distanceRun * distanceWeight) + (steps * stepsWeight)
         return score
     }
-}
-
-
-fun calculateDistance(location1: Location, location2: Location) : Float {
-    val R = 6371
-    val lon1Rad = Math.toRadians(location1.longitude)
-    val lat1Rad = Math.toRadians(location1.latitude)
-    val lon2Rad = Math.toRadians(location2.longitude)
-    val lat2Rad = Math.toRadians(location2.latitude)
-    val lonDiff = lon2Rad - lon1Rad
-    val latDiff = lat2Rad - lat1Rad
-    val a: Double = sin(latDiff / 2).pow(2.0) + cos(lat1Rad) * cos(lat2Rad) * sin(lonDiff / 2).pow(2.0)
-    val c = 2 * atan2(sqrt(a), sqrt(1 - a))
-    val distance = R * c
-    return (distance * 1000 + abs(location1.altitude - location2.altitude)).toFloat()
 }
 

@@ -20,10 +20,9 @@ class ActivitySensorsHelper(val context: Context) : LocationListener, SensorEven
 
     private val DELAY_LOCATION_SENSOR_ACTIVITY : Long = 10000
     private val sensorManager : SensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
-    private val accelerometerSensor : Sensor? = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
     private val stepCounterSensor : Sensor? = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR)
     private val fusedLocationClient : FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
-    private val physicalActivity : ActivitySensorsAux = ActivitySensorsAux()
+    private val physicalActivity : PhysicalActivityData = PhysicalActivityData.instance
 
     override fun onLocationChanged(location: Location) {
         physicalActivity.newLocation(location)
@@ -33,8 +32,6 @@ class ActivitySensorsHelper(val context: Context) : LocationListener, SensorEven
     override fun onSensorChanged(event: SensorEvent) {
         if (event.sensor.type == Sensor.TYPE_STEP_DETECTOR)
             physicalActivity.incrementStepCounter()
-        else if (event.sensor.type == Sensor.TYPE_ACCELEROMETER)
-            physicalActivity.newActivity(event.values[0], event.values[1], event.values[2])
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
@@ -42,7 +39,6 @@ class ActivitySensorsHelper(val context: Context) : LocationListener, SensorEven
     @SuppressLint("MissingPermission")
     fun onStart() {
         if(checkPermissions(context)) {
-            sensorManager.registerListener(this, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL)
             sensorManager.registerListener(this, stepCounterSensor, SensorManager.SENSOR_DELAY_NORMAL)
             fusedLocationClient.requestLocationUpdates(
                 LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, DELAY_LOCATION_SENSOR_ACTIVITY).build(),
