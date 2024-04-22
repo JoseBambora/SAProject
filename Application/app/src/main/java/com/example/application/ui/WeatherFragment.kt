@@ -46,39 +46,27 @@ class WeatherFragment : Fragment() {
             // Display the location in your UI elements
             val locationTextView = view?.findViewById<TextView>(R.id.locationTextView)
             locationTextView?.text = "Location: $locationText"
-            updateSensorData()
+            //updateSensorData()
         } else {
             Log.e("WeatherFragment", "No address found")
         }
     }
 
-
-    @SuppressLint("SetTextI18n")
-    private fun updateSensorData() {
-
-        WeatherSensorsHelper.pressure.takeIf { it != 0.0f }?.let {
-            view?.findViewById<TextView>(R.id.pressureTextView)?.apply {
-                text = "Pressure: $it hPa"
-                visibility = View.VISIBLE
-            }
-        }
-
-        WeatherSensorsHelper.relativeHumidity.takeIf { it != 0.0f }?.let {
-            view?.findViewById<TextView>(R.id.humidityTextView)?.apply {
-                text = "Humidity: $it %"
-                visibility = View.VISIBLE
-            }
-        }
-    }
-
-
     @SuppressLint("SetTextI18n")
     private fun displayData(data: Response<Weather>) {
         val weather = data.body()
-        weather?.main?.temperature?.let {
-            view?.findViewById<TextView>(R.id.temperatureTextView)?.text = "Ambient Temperature: $it ºC"
+        weather?.main?.let { main ->
+            view?.findViewById<TextView>(R.id.temperatureTextView)?.text = "Ambient Temperature: ${main.temperature} ºC"
+            view?.findViewById<TextView>(R.id.feelsLikeTextView)?.text = "Feels Like: ${main.feels_like} ºC"
+            view?.findViewById<TextView>(R.id.maxTemperatureTextView)?.text = "Max Temperature: ${main.temp_max} ºC"
+            view?.findViewById<TextView>(R.id.minTemperatureTextView)?.text = "Min Temperature: ${main.temp_min} ºC"
+            view?.findViewById<TextView>(R.id.pressureTextView)?.text = "Pressure: ${main.pressure} hPa"
+            view?.findViewById<TextView>(R.id.humidityTextView)?.text = "Humidity: ${main.humidity}%"
+            view?.findViewById<TextView>(R.id.seaLevelTextView)?.text = "Sea Level: ${main.sea_level} hPa"
+            view?.findViewById<TextView>(R.id.groundLevelTextView)?.text = "Ground Level: ${main.grnd_level} hPa"
         }
     }
+
 
     private fun error(data: Response<Weather>) {
         Log.d("DebugApp", "Error getting the weather data")
