@@ -20,11 +20,23 @@ class DailyActivity(
     val avg_humidity : Float,
     val avg_pressure : Float){
 
-    fun getPerformance() : Float {
+    fun getPerformance(): Float {
         val distanceWeight = 2
         val stepsWeight = 3
-        val normalizedDistance = distanceRun * 1000
-        val score = (normalizedDistance * distanceWeight) + (steps * stepsWeight)
+        val tempWeight = 1
+        val humidityWeight = 0.5f
+        val pressureWeight = 0.02f
+        return (distanceRun * distanceWeight) +
+                (steps * stepsWeight) +
+                (avg_temperature * tempWeight) +
+                (avg_humidity * humidityWeight) +
+                (avg_pressure * pressureWeight)
+    }
+
+    fun getPerformancePhysicalActivity(): Float {
+        val distanceWeight = 2
+        val stepsWeight = 3
+        val score = (distanceRun * distanceWeight) + (steps * stepsWeight)
         return score
     }
 }

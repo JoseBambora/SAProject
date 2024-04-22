@@ -4,6 +4,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import retrofit2.Response
 import java.time.Instant
+import java.time.LocalDate
 import java.util.Calendar
 import java.util.Date
 
@@ -53,7 +54,12 @@ class Cache {
     fun getMatchesPerformance() : List<Performance>? {
         return stats?.getMatchPerformance()
     }
-    fun getDailyPerformance() : Map<Date,Performance>? {
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getDailyPerformance() : Map<LocalDate,Performance>? {
         return stats?.getDayPerformance()
+    }
+
+    fun getPerformanceFrequency() : List<Pair<Performance,Int>>? {
+        return stats?.getPerformanceFrequency()
     }
 }

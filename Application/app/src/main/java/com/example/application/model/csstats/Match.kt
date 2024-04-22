@@ -3,10 +3,11 @@ package com.example.application.model.csstats
 import com.example.application.network.csstats.DateDeserializer
 import com.google.gson.annotations.JsonAdapter
 import com.google.gson.annotations.SerializedName
+import java.time.LocalDate
 import java.util.Date
 
 data class Match(
-    @SerializedName("date") @JsonAdapter(DateDeserializer::class) val date : Date,
+    @SerializedName("date") @JsonAdapter(DateDeserializer::class) val date : LocalDate,
     @SerializedName("map") val map : String,
     @SerializedName("score") val score : String,
     @SerializedName("kills") val kills : Int,
