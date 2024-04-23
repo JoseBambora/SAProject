@@ -15,12 +15,11 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.application.databinding.ActivityMainBinding
 import com.example.application.data.ManagerDB
-import com.example.application.utils.AccelerometerSensorsHelper
 import com.example.application.utils.ActivitySensors.ActivitySensorsHelper
-import com.example.application.utils.GravitySensorsHelper
-import com.example.application.utils.GyroscopeSensorsHelper
 import com.example.application.utils.WeatherSensorsHelper
-import com.example.application.utils.LightSensorsHelper
+import com.example.application.utils.sleep.SleepDetector
+import com.example.application.utils.sleep.SleepSensorsHelper
+import java.time.format.DateTimeFormatter
 
 class MainActivity : AppCompatActivity() {
     private val PERMISSION_LOCATION_SENSORS : Int = 1000
@@ -30,10 +29,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var activitySensorsHelper: ActivitySensorsHelper
     private lateinit var weatherSensorsHelper : WeatherSensorsHelper
-    private lateinit var lightSensorsHelper: LightSensorsHelper
-    private lateinit var accelerometerSensorsHelper: AccelerometerSensorsHelper
-    private lateinit var gyroscopeSensorsHelper: GyroscopeSensorsHelper
-    private lateinit var gravitySensorsHelper: GravitySensorsHelper
+    private lateinit var sleepSensorsHelper: SleepSensorsHelper
 
     private var permissionsGranted : Boolean = false
 
@@ -57,14 +53,8 @@ class MainActivity : AppCompatActivity() {
         activitySensorsHelper = ActivitySensorsHelper(this)
         weatherSensorsHelper = WeatherSensorsHelper(this)
 
-        // Initialize LightSensorsHelper
-        lightSensorsHelper = LightSensorsHelper(this)
-        // Initialize AccelerometerHelper
-        accelerometerSensorsHelper = AccelerometerSensorsHelper(this)
-        // Initialize GyroscopeSensorHelper
-        gyroscopeSensorsHelper = GyroscopeSensorsHelper(this)
-        // Initialize GravitySensorHelper
-        gravitySensorsHelper = GravitySensorsHelper(this)
+        // Initialize SleepSensorHelper
+        sleepSensorsHelper = SleepSensorsHelper(this)
 
         // Check and request permission for light sensor
         checkPermission()
@@ -98,10 +88,7 @@ class MainActivity : AppCompatActivity() {
         if(permissionsGranted) {
             activitySensorsHelper.onStart()
             weatherSensorsHelper.onStart()
-            lightSensorsHelper.start()
-            accelerometerSensorsHelper.start()
-            gyroscopeSensorsHelper.start()
-            gravitySensorsHelper.start()
+            sleepSensorsHelper.start()
         }
     }
 
@@ -110,15 +97,9 @@ class MainActivity : AppCompatActivity() {
         if(permissionsGranted) {
             activitySensorsHelper.onStop()
             weatherSensorsHelper.onStop()
-            lightSensorsHelper.stop()
-            accelerometerSensorsHelper.stop()
-            gyroscopeSensorsHelper.stop()
-            gravitySensorsHelper.stop()
+            sleepSensorsHelper.stop()
         }
     }
-
-    // Update the TextView with the current light intensity value
-
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
