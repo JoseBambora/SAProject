@@ -1,16 +1,9 @@
 package com.example.application.model
 
-import android.location.Location
 import java.time.LocalDate
 import java.time.LocalDateTime
-import kotlin.math.abs
-import kotlin.math.atan2
-import kotlin.math.cos
-import kotlin.math.pow
-import kotlin.math.sin
-import kotlin.math.sqrt
 
-class DailyActivity(
+data class DailyActivity(
     val distanceRun : Float,
     val steps : Int,
     val date : LocalDate,

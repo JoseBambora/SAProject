@@ -11,47 +11,38 @@
     import android.os.Looper
     import android.util.Log
     import androidx.core.content.ContextCompat
+    import com.example.application.model.weather.Weather
+    import com.example.application.network.openweather.OpenWeatherAPI
     import com.google.android.gms.location.FusedLocationProviderClient
     import com.google.android.gms.location.LocationListener
     import com.google.android.gms.location.LocationRequest
     import com.google.android.gms.location.LocationServices
     import com.google.android.gms.location.Priority
+    import retrofit2.Response
 
     class WeatherSensorsHelper(
         val context : Context
-    ) : LocationListener, SensorEventListener {
-        private val DELAY_LOCATION_SENSOR_WEATHER : Long = 1000
-        private val sensorManager : SensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        private val pressureSensor: Sensor? = sensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE)
-        private val humiditySensor : Sensor? = sensorManager.getDefaultSensor(Sensor.TYPE_RELATIVE_HUMIDITY)
+    ) : LocationListener {
+        private val DELAY_LOCATION_SENSOR_WEATHER : Long = 10000
         private val fusedLocationClient : FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
 
-        companion object {
-            var latitude: Double = 0.0
-            var longitude: Double = 0.0
-            var altitude: Double = 0.0
-            var pressure: Float = 0.0f
-            var relativeHumidity: Float = 0.0f
+        private fun getData(data: Response<Weather>) {
+            val res = data.body()
+            if(res != null)
+                WeatherData.instance.addWeather(res)
+        }
+        private fun error(data: Response<Weather>) {
+            Log.d("DebugApp", "Error getting the weather data")
         }
 
-        override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
-            // Not needed for this example
+        private fun fail(t: Throwable) {
+            Log.d("DebugApp", "Error getting the weather data " + t.message)
         }
-
-        override fun onSensorChanged(event: SensorEvent) {
-            //Not needed
-        }
-
         override fun onLocationChanged(p0: Location) {
-            Log.d("DebugApp","New Location Weather.")
-            latitude = p0.latitude
-            longitude = p0.longitude
-            altitude = p0.altitude
+            OpenWeatherAPI.getData(p0.latitude, p0.altitude,::getData,::error,::fail)
         }
         @SuppressLint("MissingPermission")
         fun onStart() {
-            sensorManager.registerListener(this, pressureSensor, SensorManager.SENSOR_DELAY_NORMAL)
-            sensorManager.registerListener(this, humiditySensor, SensorManager.SENSOR_DELAY_NORMAL)
             fusedLocationClient.requestLocationUpdates(
                 LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, DELAY_LOCATION_SENSOR_WEATHER).build(),
                 this,
@@ -61,7 +52,7 @@
 
         // Unregister sensor listeners when not needed
         fun onStop() {
-            sensorManager.unregisterListener(this)
+            fusedLocationClient.removeLocationUpdates(this)
         }
         fun checkPermissions(context : Context) : Boolean {
             val fineLocationPermission = ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION)

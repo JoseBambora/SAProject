@@ -78,10 +78,20 @@ class DailyActivityTableFuns {
         }
 
         @RequiresApi(Build.VERSION_CODES.O)
-        fun getDailyActivity() : List<DailyActivity> {
+        private fun getDailyActivityList() : List<DailyActivity> {
             val tableName : String = getTableLocation()
             val list = ManagerDB.getInstance()?.select(tableName, null, null, Companion::convertEntriesActivities)
             return if (list.isNullOrEmpty()) mutableListOf() else list
+        }
+
+        @RequiresApi(Build.VERSION_CODES.O)
+        fun getDailyActivity() : Map<LocalDate, DailyActivity> {
+            val res = mutableMapOf<LocalDate,DailyActivity>()
+            val content = getDailyActivityList()
+            content.forEach {
+                res.put(it.date,it)
+            }
+            return res
         }
     }
 }

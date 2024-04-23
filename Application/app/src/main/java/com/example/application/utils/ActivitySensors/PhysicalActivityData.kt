@@ -1,6 +1,7 @@
 package com.example.application.utils.ActivitySensors
 
 import android.location.Location
+import android.util.Log
 import com.example.application.model.physicalactivity.PhysicalActivity
 import kotlin.math.abs
 import kotlin.math.atan2
@@ -24,6 +25,7 @@ class PhysicalActivityData {
     }
 
     private fun calculateDistance(location1: Location, location2: Location) : Float {
+        Log.d("DebugApp","Loc1: $location1 Loc2: $location2")
         val R = 6371
         val lon1Rad = Math.toRadians(location1.longitude)
         val lat1Rad = Math.toRadians(location1.latitude)
@@ -38,7 +40,8 @@ class PhysicalActivityData {
     }
 
     fun newLocation(location: Location) {
-        this.distanceRun += calculateDistance(this.location,location)
+        if(this.location.provider != "")
+            this.distanceRun += calculateDistance(this.location,location)
         this.location = location
     }
 

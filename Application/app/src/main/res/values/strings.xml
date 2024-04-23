@@ -77,4 +77,5 @@
     <string name="pressure" />
     <string name="feelslike" />
     <string name="graphs">Graphs</string>
+    <string name="reload_cache">Reload Cache</string>
 </resources>

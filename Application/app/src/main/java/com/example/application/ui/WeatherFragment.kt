@@ -29,27 +29,27 @@ class WeatherFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         displayLocation()
-        fetchWeather(WeatherSensorsHelper.latitude, WeatherSensorsHelper.longitude)
+        // fetchWeather(WeatherSensorsHelper.latitude, WeatherSensorsHelper.longitude)
         //updateSensorData()
     }
 
     @SuppressLint("SetTextI18n")
     private fun displayLocation() {
         val geocoder = Geocoder(requireContext(), Locale.getDefault())
-        val addresses = geocoder.getFromLocation(
-            WeatherSensorsHelper.latitude,
-            WeatherSensorsHelper.longitude, 1)
-        if (!addresses.isNullOrEmpty()) {
-            val cityName = addresses[0].locality
-            val countryName = addresses[0].countryName
-            val locationText = "$cityName, $countryName"
-            // Display the location in your UI elements
-            val locationTextView = view?.findViewById<TextView>(R.id.locationTextView)
-            locationTextView?.text = "Location: $locationText"
-            //updateSensorData()
-        } else {
-            Log.e("WeatherFragment", "No address found")
-        }
+        // val addresses = geocoder.getFromLocation(
+        //     WeatherSensorsHelper.latitude,
+        //     WeatherSensorsHelper.longitude, 1)
+        // if (!addresses.isNullOrEmpty()) {
+        //     val cityName = addresses[0].locality
+        //     val countryName = addresses[0].countryName
+        //     val locationText = "$cityName, $countryName"
+        //     // Display the location in your UI elements
+        //     val locationTextView = view?.findViewById<TextView>(R.id.locationTextView)
+        //     locationTextView?.text = "Location: $locationText"
+        //     //updateSensorData()
+        // } else {
+        //     Log.e("WeatherFragment", "No address found")
+        // }
     }
 
     @SuppressLint("SetTextI18n")

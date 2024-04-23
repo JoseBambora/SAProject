@@ -22,6 +22,7 @@ import com.anychart.enums.TooltipPositionMode
 import com.anychart.enums.Align;
 import com.anychart.enums.LegendLayout;
 import com.example.application.R
+import com.example.application.data.DailyActivityTableFuns
 import com.example.application.databinding.FragmentSecondBinding
 import com.example.application.model.config.Config
 import com.example.application.model.config.ConfigTableFuns
@@ -82,15 +83,21 @@ class GraphsFragment : Fragment() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
+    fun getDailyActivityData() : Map<LocalDate,DailyActivity>{
+        return DailyActivityTableFuns.getDailyActivity()
+    }
+    @RequiresApi(Build.VERSION_CODES.O)
     fun histogramPerformanceActivity(graph1 : AnyChartView) {
 
         val cartesian = AnyChart.column()
 
         val data_matches = cache.getDailyPerformance()
-        val data_activity = fakeDataActivity()
+        val data_activity = getDailyActivityData()
 
         Log.d("DebugApp", data_activity.keys.toString())
         Log.d("DebugApp", data_matches?.keys.toString())
+
+        binding.numberDaysDataBase.text = data_activity.size.toString()
 
 
         val data: MutableList<DataEntry> = ArrayList()
@@ -158,7 +165,7 @@ class GraphsFragment : Fragment() {
         val cartesian = AnyChart.column()
 
         val data_matches = cache.getDailyPerformance()
-        val data_activity = fakeDataActivity()
+        val data_activity = getDailyActivityData()
 
         Log.d("DebugApp", data_activity.keys.toString())
         Log.d("DebugApp", data_matches?.keys.toString())

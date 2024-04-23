@@ -1,5 +1,6 @@
 package com.example.application.utils
 
+import SleepData
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -8,14 +9,18 @@ import android.util.Log
 import androidx.annotation.RequiresApi
 import com.example.application.data.DailyActivityTableFuns
 import com.example.application.model.DailyActivity
+import com.example.application.model.config.ConfigTableFuns
+import com.example.application.model.csstats.Cache
 import com.example.application.model.physicalactivity.PhysicalActivity
 import com.example.application.model.weather.Weather
+import com.example.application.network.csstats.StatsAPI
 import com.example.application.utils.ActivitySensors.PhysicalActivityData
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 class SaveData : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
-        //saveData()
+        saveData()
     }
 
     private fun resetValues() {
@@ -24,27 +29,40 @@ class SaveData : BroadcastReceiver() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun insertData(weather: Weather, physical: PhysicalActivity) {
+    private fun insertData(weather: Weather, physical: PhysicalActivity, sleepData : SleepData) {
         val today = LocalDate.now()
         val distanceRun = physical.distanceRun
         val steps = physical.steps
-        // TO DO
-        val start_sleeping = LocalDate.now().atStartOfDay()
-        val end_sleeping = LocalDate.now().atStartOfDay()
-        val avg_temperature = weather.main.temperature.toFloat()
-        val avg_humidity = weather.main.humidity
-        val avg_pressure = weather.main.pressure
-        val dailyActivity = DailyActivity(distanceRun,steps,today ,start_sleeping,end_sleeping,avg_temperature,avg_humidity,avg_pressure)
+        val start = sleepData.getStartTime() ?: LocalDateTime.now()
+        val end = sleepData.getEndTime() ?: LocalDateTime.now()
+        val avgTemperature = weather.main.temperature.toFloat()
+        val avgHumidity = weather.main.humidity
+        val avgPressure = weather.main.pressure
+        val dailyActivity = DailyActivity(
+            distanceRun,
+            steps,
+            today,
+            start,
+            end,
+            avgTemperature,
+            avgHumidity,
+            avgPressure
+        )
+        val config = ConfigTableFuns.getLastVersion()
+        if(config != null)
+            StatsAPI.getData(config.csstatsID, StatsAPI::default_suc, StatsAPI::default_err1, StatsAPI::default_err2)
         DailyActivityTableFuns.newDailyActivity(dailyActivity)
+        Log.d("DebugApp", "New Daily activity on the database $dailyActivity")
     }
 
     private fun saveData() {
         val weather = WeatherData.instance.getAvgWeather()
         val physical = PhysicalActivityData.instance.getData()
+        val sleepData = SleepData.instance
         resetValues()
 
         if(weather != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-           insertData(weather,physical)
+           insertData(weather,physical,sleepData)
         }
     }
 }
