@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -18,7 +17,9 @@ import com.example.application.databinding.ActivityMainBinding
 import com.example.application.data.ManagerDB
 import com.example.application.utils.ActivitySensors.ActivitySensorsHelper
 import com.example.application.utils.WeatherSensorsHelper
-import com.example.application.utils.LightSensorsHelper
+import com.example.application.utils.sleep.SleepDetector
+import com.example.application.utils.sleep.SleepSensorsHelper
+import java.time.format.DateTimeFormatter
 
 class MainActivity : AppCompatActivity() {
     private val PERMISSION_LOCATION_SENSORS : Int = 1000
@@ -28,7 +29,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var activitySensorsHelper: ActivitySensorsHelper
     private lateinit var weatherSensorsHelper : WeatherSensorsHelper
-    private lateinit var lightSensorsHelper: LightSensorsHelper
+    private lateinit var sleepSensorsHelper: SleepSensorsHelper
 
     private var permissionsGranted : Boolean = false
 
@@ -52,9 +53,8 @@ class MainActivity : AppCompatActivity() {
         activitySensorsHelper = ActivitySensorsHelper(this)
         weatherSensorsHelper = WeatherSensorsHelper(this)
 
-        // Initialize LightSensorsHelper
-        lightSensorsHelper = LightSensorsHelper(this)
-
+        // Initialize SleepSensorHelper
+        sleepSensorsHelper = SleepSensorsHelper(this)
 
         // Check and request permission for light sensor
         checkPermission()
@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity() {
         if(permissionsGranted) {
             activitySensorsHelper.onStart()
             weatherSensorsHelper.onStart()
-            lightSensorsHelper.start()
+            sleepSensorsHelper.start()
         }
     }
 
@@ -97,12 +97,9 @@ class MainActivity : AppCompatActivity() {
         if(permissionsGranted) {
             activitySensorsHelper.onStop()
             weatherSensorsHelper.onStop()
-            lightSensorsHelper.stop()
+            sleepSensorsHelper.stop()
         }
     }
-
-    // Update the TextView with the current light intensity value
-
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
