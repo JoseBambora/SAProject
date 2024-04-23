@@ -52,27 +52,6 @@ class SleepSensorsHelper(private val context: Context) : SensorEventListener {
         sensorManager?.unregisterListener(this)
     }
 
-//    override fun onSensorChanged(event: SensorEvent) {
-//        when (event.sensor.type) {
-//            Sensor.TYPE_ACCELEROMETER -> {
-//                System.arraycopy(event.values, 0, accelerometerData, 0, event.values.size)
-//                Log.d("Accelerometer", "X: ${accelerometerData[0]}, Y: ${accelerometerData[1]}, Z: ${accelerometerData[2]}")
-//            }
-//            Sensor.TYPE_GRAVITY -> {
-//                System.arraycopy(event.values, 0, gravityData, 0, event.values.size)
-//                Log.d("GravitySensor", "X: ${gravityData[0]}, Y: ${gravityData[1]}, Z: ${gravityData[2]}")
-//            }
-//            Sensor.TYPE_GYROSCOPE -> {
-//                System.arraycopy(event.values, 0, gyroscopeData, 0, event.values.size)
-//                Log.d("GyroscopeSensor", "X: ${gyroscopeData[0]}, Y: ${gyroscopeData[1]}, Z: ${gyroscopeData[2]}")
-//            }
-//            Sensor.TYPE_LIGHT -> {
-//                sensorlight = event.values[0]
-//                Log.d("LightSensor", "Light intensity: $sensorlight lux")
-//            }
-//        }
-//    }
-
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onSensorChanged(event: SensorEvent) {
         when (event.sensor.type) {
