@@ -22,11 +22,12 @@ import com.anychart.enums.TooltipPositionMode
 import com.anychart.enums.Align;
 import com.anychart.enums.LegendLayout;
 import com.example.application.R
+import com.example.application.data.DailyActivityTableFuns
 import com.example.application.databinding.FragmentSecondBinding
 import com.example.application.model.config.Config
 import com.example.application.model.config.ConfigTableFuns
 import com.example.application.model.csstats.Cache
-import com.example.application.model.physicalactivity.DailyActivity
+import com.example.application.model.DailyActivity
 import java.time.LocalDate
 
 
@@ -55,32 +56,48 @@ class GraphsFragment : Fragment() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun fakeDataActivity() : Map<LocalDate,DailyActivity>{
+    fun fakeDataActivity() : Map<LocalDate, DailyActivity>{
         val yesterday = LocalDate.of(2024,4,20)
         val day_18 = LocalDate.of(2024,4,18)
         val day_14 = LocalDate.of(2024,4,14)
         val day_12 = LocalDate.of(2024,4,12)
         val day_11 = LocalDate.of(2024,4,11)
 
-        val data_activity = mutableMapOf<LocalDate,DailyActivity>()
-        data_activity.put(yesterday,DailyActivity(20000f,5000,yesterday , yesterday.minusDays(1).atTime(22,0), yesterday.atTime(8,0), 20f,0.1f, 1f))
-        data_activity.put(day_18,DailyActivity(20000f,5000,day_18 , day_18.minusDays(1).atTime(22,0), day_18.atTime(8,0), 20f,0.1f, 1f))
-        data_activity.put(day_14,DailyActivity(500f,100,day_14 , day_14.minusDays(1).atTime(22,0), day_14.atTime(8,0), 20f,0.1f, 1f))
-        data_activity.put(day_12,DailyActivity(10000f,1000,day_12 , day_12.minusDays(1).atTime(22,0), day_12.atTime(8,0), 20f,0.1f, 1f))
-        data_activity.put(day_11,DailyActivity(22000f,5500,day_11 , day_11.minusDays(1).atTime(22,0), day_11.atTime(8,0), 20f,0.1f, 1f))
+        val data_activity = mutableMapOf<LocalDate, DailyActivity>()
+        data_activity.put(yesterday,
+            DailyActivity(20000f,5000,yesterday , yesterday.minusDays(1).atTime(22,0), yesterday.atTime(8,0), 20f,10, 1)
+        )
+        data_activity.put(day_18,
+            DailyActivity(20000f,5000,day_18 , day_18.minusDays(1).atTime(22,0), day_18.atTime(8,0), 20f,10, 1)
+        )
+        data_activity.put(day_14,
+            DailyActivity(500f,100,day_14 , day_14.minusDays(1).atTime(22,0), day_14.atTime(8,0), 20f,10, 1)
+        )
+        data_activity.put(day_12,
+            DailyActivity(10000f,1000,day_12 , day_12.minusDays(1).atTime(22,0), day_12.atTime(8,0), 20f,10, 1)
+        )
+        data_activity.put(day_11,
+            DailyActivity(22000f,5500,day_11 , day_11.minusDays(1).atTime(22,0), day_11.atTime(8,0), 20f,10, 1)
+        )
         return data_activity
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getDailyActivityData() : Map<LocalDate,DailyActivity>{
+        return DailyActivityTableFuns.getDailyActivity()
+    }
     @RequiresApi(Build.VERSION_CODES.O)
     fun histogramPerformanceActivity(graph1 : AnyChartView) {
 
         val cartesian = AnyChart.column()
 
         val data_matches = cache.getDailyPerformance()
-        val data_activity = fakeDataActivity()
+        val data_activity = getDailyActivityData()
 
         Log.d("DebugApp", data_activity.keys.toString())
         Log.d("DebugApp", data_matches?.keys.toString())
+
+        binding.numberDaysDataBase.text = data_activity.size.toString()
 
 
         val data: MutableList<DataEntry> = ArrayList()
@@ -148,7 +165,7 @@ class GraphsFragment : Fragment() {
         val cartesian = AnyChart.column()
 
         val data_matches = cache.getDailyPerformance()
-        val data_activity = fakeDataActivity()
+        val data_activity = getDailyActivityData()
 
         Log.d("DebugApp", data_activity.keys.toString())
         Log.d("DebugApp", data_matches?.keys.toString())

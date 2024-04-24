@@ -1,5 +1,8 @@
 package com.example.application
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -15,11 +18,13 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.application.databinding.ActivityMainBinding
 import com.example.application.data.ManagerDB
+import com.example.application.model.config.ConfigTableFuns
+import com.example.application.model.csstats.Cache
+import com.example.application.network.csstats.StatsAPI
 import com.example.application.utils.ActivitySensors.ActivitySensorsHelper
+import com.example.application.utils.SaveData
 import com.example.application.utils.WeatherSensorsHelper
-import com.example.application.utils.sleep.SleepDetector
 import com.example.application.utils.sleep.SleepSensorsHelper
-import java.time.format.DateTimeFormatter
 
 class MainActivity : AppCompatActivity() {
     private val PERMISSION_LOCATION_SENSORS : Int = 1000
@@ -50,6 +55,7 @@ class MainActivity : AppCompatActivity() {
         binding.fab.setOnClickListener { _ ->
             findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.ConfigFragment)
         }
+        binding.reloadCache.setOnClickListener{_ -> initiateCache()}
         activitySensorsHelper = ActivitySensorsHelper(this)
         weatherSensorsHelper = WeatherSensorsHelper(this)
 
@@ -57,6 +63,8 @@ class MainActivity : AppCompatActivity() {
         sleepSensorsHelper = SleepSensorsHelper(this)
 
         // Check and request permission for light sensor
+        scheduleMidnightAlarm()
+        initiateCache()
         checkPermission()
     }
 
@@ -131,5 +139,37 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "Location permissions are required to access user location.", Toast.LENGTH_LONG).show()
             }
         }
+    }
+    private fun scheduleMidnightAlarm() {
+        val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+        val intent = Intent(this, SaveData::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+
+        val intervalMillis = AlarmManager.INTERVAL_DAY
+
+        val triggerAtMillis = System.currentTimeMillis()
+
+        alarmManager.setInexactRepeating(
+            AlarmManager.RTC_WAKEUP,
+            triggerAtMillis,
+            intervalMillis,// 60 * 1000,
+            pendingIntent
+        )
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun initiateCache() {
+        val config = ConfigTableFuns.getLastVersion()
+        if(config != null) {
+            if(Cache.getInstance().needsUpdate()) {
+                Toast.makeText(this,"Data not in cache. Contacting API.", Toast.LENGTH_SHORT).show()
+                StatsAPI.getData(config.csstatsID, StatsAPI::default_suc, StatsAPI::default_err1, StatsAPI::default_err2)
+            }
+            else
+                Toast.makeText(this,"Cache does not need to be updated",Toast.LENGTH_SHORT).show()
+
+        }
+        else
+            Toast.makeText(this,"No configuration saved",Toast.LENGTH_SHORT).show()
     }
 }

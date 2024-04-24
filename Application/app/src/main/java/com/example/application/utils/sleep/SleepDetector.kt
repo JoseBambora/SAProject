@@ -28,7 +28,7 @@ class SleepDetector {
             val gyroscopeData = SleepSensorsHelper.gyroscopeData
 
             // Log light intensity for debugging
-            Log.d("SleepDetector.updateSensorData", "Light Intensity: $lightIntensity")
+            // Log.d("SleepDetector.updateSensorData", "Light Intensity: $lightIntensity")
 
             detectSleep(lightIntensity, accelerometerData, gravityData, gyroscopeData)
         }
@@ -42,7 +42,7 @@ class SleepDetector {
             val isInactive = calculateAccelerationMagnitude(gyroscopeData) < GYROSCOPE_THRESHOLD
 
             // Log values for debugging
-            Log.d("SleepDetector", "isDark: $isDark, isStationary: $isStationary, isLayingDown: $isLayingDown, isInactive: $isInactive")
+            // Log.d("SleepDetector", "isDark: $isDark, isStationary: $isStationary, isLayingDown: $isLayingDown, isInactive: $isInactive")
 
             // Check if conditions indicate sleep
             if (isDark && isStationary && isLayingDown && isInactive) {

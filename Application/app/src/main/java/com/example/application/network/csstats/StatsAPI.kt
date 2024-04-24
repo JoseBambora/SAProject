@@ -1,5 +1,9 @@
 package com.example.application.network.csstats
 
+import android.os.Build
+import android.util.Log
+import androidx.annotation.RequiresApi
+import com.example.application.model.csstats.Cache
 import com.example.application.model.csstats.Stats
 import retrofit2.Call
 import retrofit2.Callback
@@ -37,6 +41,18 @@ class StatsAPI {
                     fail.invoke(t)
                 }
             })
+        }
+
+        @RequiresApi(Build.VERSION_CODES.O)
+        fun default_suc(res : Response<Stats>) {
+            Cache.getInstance().saveInfo(res)
+        }
+
+        fun default_err1(res : Response<Stats>) {
+            Log.d("DebugApp","Error 1 when contacting the API")
+        }
+        fun default_err2(t : Throwable) {
+            Log.d("DebugApp","Error 2 when contacting the API " + t.message.toString())
         }
     }
 }
