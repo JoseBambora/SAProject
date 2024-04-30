@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/reload"
+        android:title="@string/reload_cache"
+        android:icon="@drawable/reload_28"/>
+    <item
+        android:id="@+id/sensorData"
+        android:title="@string/sensor_data"
+        android:icon="@drawable/baseline_phonelink_ring_24"/>
+    <item
+        android:id="@+id/home"
+        android:title="@string/home"
+        android:icon="@drawable/baseline_home_24"/>
+    <item
+        android:id="@+id/graphs"
+        android:title="@string/graphs"
+        android:icon="@drawable/baseline_query_stats_24"/>
+    <item
+        android:id="@+id/settings"
+        android:title="@string/settings"
+        android:icon="@drawable/settings_84"/>
+</menu>

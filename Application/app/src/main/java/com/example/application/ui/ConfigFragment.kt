@@ -40,8 +40,6 @@ class ConfigFragment : Fragment() {
 
     private fun setOnClicks(view : View) {
         view.findViewById<Button>(R.id.submit_config)?.setOnClickListener {v -> saveConfig()}
-        view.findViewById<Button>(R.id.load_config)?.setOnClickListener {v -> loadConfig()}
-
     }
     private fun saveConfig() {
         val csstatsid = view?.findViewById<EditText>(R.id.csstatsid)?.text.toString()
