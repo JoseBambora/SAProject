@@ -20,4 +20,12 @@
         <item name="boxStrokeColor">@color/orange</item>
         <item name="boxStrokeWidth">2dp</item>
     </style>
+    <style name="navbarText">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">30sp</item>
+    </style>
+    <style name="CustomButtonStyle" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/custom_button_background</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
 </resources>

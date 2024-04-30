@@ -41,18 +41,6 @@ class MainPageFragment : Fragment() {
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding.graphsButton.setOnClickListener {
-            if(Cache.getInstance().hasInfo())
-                findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
-            else
-                Toast.makeText(activity, "No performance Data", Toast.LENGTH_SHORT).show()
-        }
-
-
-    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

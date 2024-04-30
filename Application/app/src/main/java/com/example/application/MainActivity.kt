@@ -12,7 +12,9 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -52,10 +54,10 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-        binding.fab.setOnClickListener { _ ->
-            findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.ConfigFragment)
-        }
-        binding.reloadCache.setOnClickListener{_ -> initiateCache()}
+        //binding.fab.setOnClickListener { _ ->
+            //findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.ConfigFragment)
+        //}
+        //binding.reloadCache.setOnClickListener{_ -> initiateCache()}
         activitySensorsHelper = ActivitySensorsHelper(this)
         weatherSensorsHelper = WeatherSensorsHelper(this)
 
@@ -66,29 +68,27 @@ class MainActivity : AppCompatActivity() {
         scheduleMidnightAlarm()
         initiateCache()
         checkPermission()
+        binding.bottomNavigationView.selectedItemId=R.id.home
+        binding.bottomNavigationView.setOnNavigationItemSelectedListener {
+            when(it.itemId){
+                R.id.reload->Toast.makeText(this, "TODO", Toast.LENGTH_SHORT).show()
+                R.id.sensorData->findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.weatherFragment)
+                R.id.home->findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.FirstFragment)
+                R.id.graphs->
+                            if(Cache.getInstance().hasInfo())
+                                findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.SecondFragment)
+                            else
+                                Toast.makeText(this, "No performance Data", Toast.LENGTH_SHORT).show()
+                R.id.settings->findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.ConfigFragment)
+            }
+            true
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_settings -> {
-                findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.ConfigFragment)
-                return true
-            }
-            R.id.action_weather -> {
-                findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.weatherFragment)
-                return true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
     }
 
     override fun onResume() {

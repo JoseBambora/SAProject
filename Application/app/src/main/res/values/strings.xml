@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">Application</string>
-    <string name="action_settings">Settings</string>
+    <string name="app_name">Counter Sense</string>
+    <string name="settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
@@ -47,7 +47,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="save_config">Save Config</string>
     <string name="cs_stats_id">CS STATS ID</string>
-    <string name="sa_project">SA Project</string>
+    <string name="sa_project"> Counter Sense </string>
     <string name="body_weight">Body Weight (KG)</string>
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
@@ -78,4 +78,13 @@
     <string name="feelslike" />
     <string name="graphs">Graphs</string>
     <string name="reload_cache">Reload Cache</string>
+    <string name="app_logo"> App Logo</string>
+    <string name="app_description">Counter Sense is your personal Counter-Strike 2 unofficial performance analyser.</string>
+    <string name="user_settings">User Settings</string>
+    <string name="current_weather_data">Current Weather Data</string>
+    <string name="sensor_data">Sensor Data</string>
+    <string name="home">Home</string>
+    <string name="uminho">UMinho</string>
+    <string name="appContext">This application was built for the practical project of the Sensorization and Environment curricular unit of the Software Engineering Masters Degree at Universidade do Minho.</string>
+    <string name="partners">Partners</string>
 </resources>
