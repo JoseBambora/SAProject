@@ -19,9 +19,9 @@ class DailyActivityTableFuns {
                 put("date", activity.date.toString())
                 put("start_time", activity.startSleepTime.toString())
                 put("end_time", activity.endSleepTime.toString())
-                put("avg_temperature", activity.avg_temperature)
-                put("avg_pressure", activity.avg_pressure)
-                put("avg_humidity", activity.avg_humidity)
+                put("avg_temperature", activity.avgTemperature)
+                put("avg_pressure", activity.avgPressure)
+                put("avg_humidity", activity.avgHumidity)
             }
             return values
         }

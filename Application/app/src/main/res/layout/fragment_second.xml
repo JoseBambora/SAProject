@@ -17,64 +17,36 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent" />
 
-        <Button
-            android:id="@+id/button_second"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/previous" />
-
-
-        <com.anychart.AnyChartView
-            android:id="@+id/graph1"
-            android:layout_width="match_parent"
-            android:layout_height="200dp" />
-
-        <ProgressBar
-            android:id="@+id/progress_bar_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
+        <include android:id="@+id/graph1" layout="@layout/fragment_graph"/>
 
         <Space
             android:layout_width="0dp"
             android:layout_height="15dp"/>
 
-        <com.anychart.AnyChartView
-            android:id="@+id/graph2"
-            android:layout_width="match_parent"
-            android:layout_height="200dp" />
-
-        <ProgressBar
-            android:id="@+id/progress_bar_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
+        <include android:id="@+id/graph2" layout="@layout/fragment_graph"/>
 
         <Space
             android:layout_width="0dp"
             android:layout_height="15dp"/>
 
-        <com.anychart.AnyChartView
-            android:id="@+id/graph3"
-            android:layout_width="match_parent"
-            android:layout_height="200dp" />
+        <include android:id="@+id/graph3" layout="@layout/fragment_graph"/>
 
-        <ProgressBar
-            android:id="@+id/progress_bar_3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="15dp"/>
+
+        <include android:id="@+id/graph4" layout="@layout/fragment_graph"/>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="15dp"/>
+
+        <include android:id="@+id/graph5" layout="@layout/fragment_graph"/>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="15dp"/>
+
+        <include android:id="@+id/graph6" layout="@layout/fragment_graph"/>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
