@@ -1,7 +1,11 @@
 package com.example.application.model
 
+import android.os.Build
+import android.util.Log
+import androidx.annotation.RequiresApi
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.Duration
 
 data class DailyActivity(
     val distanceRun : Float,
@@ -9,26 +13,40 @@ data class DailyActivity(
     val date : LocalDate,
     val startSleepTime : LocalDateTime,
     val endSleepTime : LocalDateTime,
-    val avg_temperature : Float,
-    val avg_humidity : Int,
-    val avg_pressure : Int){
+    val avgTemperature : Float,
+    val avgHumidity : Int,
+    val avgPressure : Int){
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun getPerformance(): Float {
         val distanceWeight = 2
         val stepsWeight = 3
+        val sleepWeight = 2.5f
         val tempWeight = 1
         val humidityWeight = 0.5f
         val pressureWeight = 0.02f
+
+        val sleeptime = Duration.between(startSleepTime, endSleepTime).toMinutes()
         return (distanceRun * distanceWeight) +
                 (steps * stepsWeight) +
-                (avg_temperature * tempWeight) +
-                (avg_humidity * humidityWeight) +
-                (avg_pressure * pressureWeight)
+                (sleeptime * sleepWeight) +
+                (avgTemperature * tempWeight) +
+                (avgHumidity * humidityWeight) +
+                (avgPressure * pressureWeight)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getSleepingTimeMinutes() : Float {
+        return Duration.between(startSleepTime, endSleepTime).toMinutes().toFloat()
+    }
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getSleepingTimeHours() : Float {
+        Log.d("DebugApp",Duration.between(startSleepTime, endSleepTime).toHours().toFloat().toString())
+        return Duration.between(startSleepTime, endSleepTime).toHours().toFloat()
+    }
     fun getPerformancePhysicalActivity(): Float {
-        val distanceWeight = 2
-        val stepsWeight = 3
+        val distanceWeight = 0.0005f
+        val stepsWeight = 0.0007f
         val score = (distanceRun * distanceWeight) + (steps * stepsWeight)
         return score
     }
