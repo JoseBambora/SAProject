@@ -118,7 +118,7 @@ class GraphsFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        drawGraph(binding.graph1.graph,binding.graph1.progressBar,::histogramPerformanceActivity)
+        //drawGraph(binding.graph1.graph,binding.graph1.progressBar,::histogramPerformanceActivity)
         drawGraph(binding.graph2.graph,binding.graph2.progressBar,::frequencyMatchPerformances)
         drawGraph(binding.graph3.graph,binding.graph3.progressBar,::histogramPhysicalActivityImpact)
         drawGraph(binding.graph4.graph,binding.graph4.progressBar,::scatterPlotPerformances)
