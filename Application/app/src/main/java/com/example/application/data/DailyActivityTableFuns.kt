@@ -93,5 +93,10 @@ class DailyActivityTableFuns {
             }
             return res
         }
+
+        @RequiresApi(Build.VERSION_CODES.O)
+        fun getSizeData() : Int {
+            return getDailyActivityList().size
+        }
     }
 }

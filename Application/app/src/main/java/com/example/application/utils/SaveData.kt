@@ -10,11 +10,11 @@ import androidx.annotation.RequiresApi
 import com.example.application.data.DailyActivityTableFuns
 import com.example.application.model.DailyActivity
 import com.example.application.model.config.ConfigTableFuns
-import com.example.application.model.csstats.Cache
 import com.example.application.model.physicalactivity.PhysicalActivity
 import com.example.application.model.weather.Weather
 import com.example.application.network.csstats.StatsAPI
-import com.example.application.utils.ActivitySensors.PhysicalActivityData
+import com.example.application.utils.physicalactivity.PhysicalActivityData
+import com.example.application.utils.weather.WeatherData
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -26,6 +26,7 @@ class SaveData : BroadcastReceiver() {
     private fun resetValues() {
         WeatherData.instance.reset()
         PhysicalActivityData.instance.reset()
+        SleepData.instance.reset()
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -48,9 +49,9 @@ class SaveData : BroadcastReceiver() {
             avgHumidity,
             avgPressure
         )
-        val config = ConfigTableFuns.getLastVersion()
-        if(config != null)
-            StatsAPI.getData(config.csstatsID, StatsAPI::default_suc, StatsAPI::default_err1, StatsAPI::default_err2)
+        // val config = ConfigTableFuns.getLastVersion()
+        // if(config != null)
+        //     StatsAPI.getData(config.csstatsID, StatsAPI::default_suc, StatsAPI::default_err1, StatsAPI::default_err2)
         DailyActivityTableFuns.newDailyActivity(dailyActivity)
         Log.d("DebugApp", "New Daily activity on the database $dailyActivity")
     }

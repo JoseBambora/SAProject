@@ -1,4 +1,4 @@
-package com.example.application.utils.ActivitySensors
+package com.example.application.utils.physicalactivity
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -18,7 +18,7 @@ import com.google.android.gms.location.Priority
 
 class ActivitySensorsHelper(val context: Context) : LocationListener, SensorEventListener {
 
-    private val DELAY_LOCATION_SENSOR_ACTIVITY : Long = 10000
+    private val DELAY_LOCATION_SENSOR_ACTIVITY : Long = 600000 // 10 minutes
     private val sensorManager : SensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
     private val stepCounterSensor : Sensor? = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR)
     private val fusedLocationClient : FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
@@ -55,12 +55,14 @@ class ActivitySensorsHelper(val context: Context) : LocationListener, SensorEven
         }
     }
 
-    fun checkPermissions(context : Context) : Boolean {
-        val fineLocationPermission = ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION)
-        val coarseLocationPermission = ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_COARSE_LOCATION)
-        val activityRecognitionPermission = ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACTIVITY_RECOGNITION)
-        return fineLocationPermission == PackageManager.PERMISSION_GRANTED &&
-                coarseLocationPermission == PackageManager.PERMISSION_GRANTED &&
-                activityRecognitionPermission == PackageManager.PERMISSION_GRANTED
+    companion object {
+        fun checkPermissions(context : Context) : Boolean {
+            val fineLocationPermission = ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION)
+            val coarseLocationPermission = ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_COARSE_LOCATION)
+            val activityRecognitionPermission = ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACTIVITY_RECOGNITION)
+            return fineLocationPermission == PackageManager.PERMISSION_GRANTED &&
+                    coarseLocationPermission == PackageManager.PERMISSION_GRANTED &&
+                    activityRecognitionPermission == PackageManager.PERMISSION_GRANTED
+        }
     }
 }

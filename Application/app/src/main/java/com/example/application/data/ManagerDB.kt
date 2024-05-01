@@ -28,7 +28,7 @@ class ManagerDB(context: Context,
         var mdb : ManagerDB? = null
         fun initialize(app : Application) {
             if (mdb == null)
-                mdb = ManagerDB(app,"DatabaseSA",2)
+                mdb = ManagerDB(app,"DatabaseSA",3)
         }
         fun getInstance() : ManagerDB? {
             return mdb

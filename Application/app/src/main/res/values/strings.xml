@@ -87,4 +87,5 @@
     <string name="uminho">UMinho</string>
     <string name="appContext">This application was built for the practical project of the Sensorization and Environment curricular unit of the Software Engineering Masters Degree at Universidade do Minho.</string>
     <string name="partners">Partners</string>
+    <string name="current_data_collected">Current Data Collected</string>
 </resources>

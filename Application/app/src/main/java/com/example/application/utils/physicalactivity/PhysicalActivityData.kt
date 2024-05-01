@@ -1,4 +1,4 @@
-package com.example.application.utils.ActivitySensors
+package com.example.application.utils.physicalactivity
 
 import android.location.Location
 import com.example.application.model.physicalactivity.PhysicalActivity
@@ -16,6 +16,7 @@ class PhysicalActivityData {
     private var distanceRun : Float = 0.0f
     private var steps : Int = 0
     fun reset() {
+        location = Location("")
         distanceRun = 0.0f
         steps = 0
     }
@@ -24,17 +25,7 @@ class PhysicalActivityData {
     }
 
     private fun calculateDistance(location1: Location, location2: Location) : Float {
-        val R = 6371
-        val lon1Rad = Math.toRadians(location1.longitude)
-        val lat1Rad = Math.toRadians(location1.latitude)
-        val lon2Rad = Math.toRadians(location2.longitude)
-        val lat2Rad = Math.toRadians(location2.latitude)
-        val lonDiff = lon2Rad - lon1Rad
-        val latDiff = lat2Rad - lat1Rad
-        val a: Double = sin(latDiff / 2).pow(2.0) + cos(lat1Rad) * cos(lat2Rad) * sin(lonDiff / 2).pow(2.0)
-        val c = 2 * atan2(sqrt(a), sqrt(1 - a))
-        val distance = R * c
-        return (distance * 1000 + abs(location1.altitude - location2.altitude)).toFloat()
+        return location1.distanceTo(location2)
     }
 
     fun newLocation(location: Location) {
