@@ -9,7 +9,7 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 
-class SleepSensorsHelper(private val context: Context) : SensorEventListener {
+class SleepSensorsHelper(context: Context) : SensorEventListener {
 
     private var sensorManager: SensorManager? = null
     private var accelerometerSensor: Sensor? = null
@@ -33,7 +33,7 @@ class SleepSensorsHelper(private val context: Context) : SensorEventListener {
         Log.d("SleepSensorsHelper", "Initialized")
     }
 
-    fun start() {
+    fun onStart() {
         accelerometerSensor?.let {
             sensorManager?.registerListener(this, it, SensorManager.SENSOR_DELAY_NORMAL)
         }
@@ -48,7 +48,7 @@ class SleepSensorsHelper(private val context: Context) : SensorEventListener {
         }
     }
 
-    fun stop() {
+    fun onStop() {
         sensorManager?.unregisterListener(this)
     }
 

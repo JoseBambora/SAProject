@@ -33,8 +33,8 @@
 
     </fragment>
     <fragment
-        android:id="@+id/weatherFragment"
-        android:name="com.example.application.ui.WeatherFragment"
-        tools:layout="@layout/fragment_weather" />
+        android:id="@+id/dataCollectionFragment"
+        android:name="com.example.application.ui.DataCollectionFragment"
+        tools:layout="@layout/fragment_data_collection" />
 
 </navigation>

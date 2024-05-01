@@ -20,4 +20,9 @@ class SleepData private constructor() {
         startTime = start
         endTime = end
     }
+
+    fun reset() {
+        startTime = null
+        endTime = null
+    }
 }

@@ -1,12 +1,9 @@
-    package com.example.application.utils
+    package com.example.application.utils.weather
 
     import android.annotation.SuppressLint
     import android.content.Context
     import android.content.pm.PackageManager
-    import android.hardware.Sensor
-    import android.hardware.SensorEvent
-    import android.hardware.SensorEventListener
-    import android.hardware.SensorManager
+    import android.location.Geocoder
     import android.location.Location
     import android.os.Looper
     import android.util.Log
@@ -19,11 +16,12 @@
     import com.google.android.gms.location.LocationServices
     import com.google.android.gms.location.Priority
     import retrofit2.Response
+    import java.util.Locale
 
     class WeatherSensorsHelper(
         val context : Context
     ) : LocationListener {
-        private val DELAY_LOCATION_SENSOR_WEATHER : Long = 10000
+        private val DELAY_LOCATION_SENSOR_WEATHER : Long = 3600000 // hourly
         private val fusedLocationClient : FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
 
         private fun getData(data: Response<Weather>) {
@@ -34,30 +32,34 @@
         private fun error(data: Response<Weather>) {
             Log.d("DebugApp", "Error getting the weather data")
         }
-
         private fun fail(t: Throwable) {
             Log.d("DebugApp", "Error getting the weather data " + t.message)
         }
         override fun onLocationChanged(p0: Location) {
-            OpenWeatherAPI.getData(p0.latitude, p0.altitude,::getData,::error,::fail)
+            OpenWeatherAPI.getData(41.545448, -8.426507,::getData,::error,::fail)
         }
         @SuppressLint("MissingPermission")
         fun onStart() {
-            fusedLocationClient.requestLocationUpdates(
-                LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, DELAY_LOCATION_SENSOR_WEATHER).build(),
-                this,
-                Looper.getMainLooper()
-            )
+            if(checkPermissions(context)) {
+                fusedLocationClient.requestLocationUpdates(
+                    LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, DELAY_LOCATION_SENSOR_WEATHER).build(),
+                    this,
+                    Looper.getMainLooper()
+                )
+            }
         }
 
         // Unregister sensor listeners when not needed
         fun onStop() {
-            fusedLocationClient.removeLocationUpdates(this)
+            if(checkPermissions(context))
+                fusedLocationClient.removeLocationUpdates(this)
         }
-        fun checkPermissions(context : Context) : Boolean {
-            val fineLocationPermission = ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION)
-            val coarseLocationPermission = ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_COARSE_LOCATION)
-            return fineLocationPermission == PackageManager.PERMISSION_GRANTED &&
-                    coarseLocationPermission == PackageManager.PERMISSION_GRANTED
+        companion object {
+            fun checkPermissions(context : Context) : Boolean {
+                val fineLocationPermission = ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                val coarseLocationPermission = ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_COARSE_LOCATION)
+                return fineLocationPermission == PackageManager.PERMISSION_GRANTED &&
+                        coarseLocationPermission == PackageManager.PERMISSION_GRANTED
+            }
         }
     }

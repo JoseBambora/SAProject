@@ -29,8 +29,6 @@ class ConfigFragment : Fragment() {
     private fun fillEditText(view : View) {
         if (config != null) {
             view.findViewById<EditText>(R.id.csstatsid)?.setText(config?.csstatsID)
-            view.findViewById<EditText>(R.id.bodyWeight)?.setText(config?.bodyWeight.toString())
-            view.findViewById<com.google.android.material.switchmaterial.SwitchMaterial>(R.id.switchLocationSensor)?.isChecked = true
         }
     }
 
@@ -43,9 +41,7 @@ class ConfigFragment : Fragment() {
     }
     private fun saveConfig() {
         val csstatsid = view?.findViewById<EditText>(R.id.csstatsid)?.text.toString()
-        val bodyWeight = view?.findViewById<EditText>(R.id.bodyWeight)?.text.toString().toFloat()
-        val sensorLocation = view?.findViewById<com.google.android.material.switchmaterial.SwitchMaterial>(R.id.switchLocationSensor)?.isChecked ?: false
-        ConfigTableFuns.newConfig(config, csstatsid, bodyWeight, sensorLocation)
+        ConfigTableFuns.newConfig(config, csstatsid, 0.0f, true)
         Toast.makeText(activity, "Config saved", Toast.LENGTH_SHORT).show()
         findNavController().navigate(R.id.action_to_inicial_menu)
     }
