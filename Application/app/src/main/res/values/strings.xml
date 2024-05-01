@@ -87,4 +87,22 @@
     <string name="uminho">UMinho</string>
     <string name="appContext">This application was built for the practical project of the Sensorization and Environment curricular unit of the Software Engineering Masters Degree at Universidade do Minho.</string>
     <string name="partners">Partners</string>
+<<<<<<< Updated upstream
+=======
+    <string name="current_data_collected">Current Data Collected</string>
+    <string name="performance_data_analysis">Performance Data Analysis</string>
+    <string name="performanceImpact">This Graph showcases the impact physical activity provides to your performance, taking your daily activity into account.</string>
+    <string name="performanceValues"><![CDATA[This graph can help you understand the frequency of your performance levels. We take all factors of your score into account to create a new metric called AVG Daily Match Performance. It measures performance in seven levels, Terrible (< 1.5), Very Bad (< 2.5), Bad (< 3.5), Medium (< 4.5), Good (< 5.5), Very Good (< 6.5) and Excellent (6.5 or higher).]]></string>
+    <string name="performanceSleep">Here you can see how your estimated sleep time (in minutes) affects your performance.</string>
+    <string name="SleepDistribution">This is the distribution of your estimated sleep time.</string>
+    <string name="OverallGraph">The Overall Graph displays the values of all relevant data used to make the other graphs.</string>
+    <string name="distance_run">Distance Run:</string>
+    <string name="steps_counter">Steps Counter:</string>
+    <string name="start_sleeping">Start Sleeping:</string>
+    <string name="end_sleeping">End Sleeping:</string>
+    <string name="avg_temperature_c">Avg Temperature (ºC):</string>
+    <string name="avg_humidity">Avg Humidity:</string>
+    <string name="avg_pressure">Avg Pressure:</string>
+    <string name="data_stored">Data Stored:</string>
+>>>>>>> Stashed changes
 </resources>

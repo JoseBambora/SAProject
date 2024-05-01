@@ -15,6 +15,7 @@
         <TextView
             android:id="@+id/numberDaysDataBase"
             android:layout_width="wrap_content"
+<<<<<<< Updated upstream
             android:layout_height="match_parent" />
 
         <Button
@@ -38,6 +39,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             />
+=======
+            android:layout_height="match_parent"
+            android:text="@string/performance_data_analysis"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_gravity="center"
+            android:textAlignment="center"/>
+>>>>>>> Stashed changes
 
         <Space
             android:layout_width="0dp"
@@ -62,6 +71,7 @@
             android:layout_width="0dp"
             android:layout_height="15dp"/>
 
+<<<<<<< Updated upstream
         <com.anychart.AnyChartView
             android:id="@+id/graph3"
             android:layout_width="match_parent"
@@ -76,5 +86,92 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             />
+=======
+        <TextView
+            android:id="@+id/DescGraph1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/performanceValues"
+            android:layout_gravity="center"
+            android:textAlignment="center"/>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="15dp"/>
+
+
+        <include android:id="@+id/graph3" layout="@layout/fragment_graph"/>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="15dp"/>
+
+        <TextView
+            android:id="@+id/DescGraph2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/performanceImpact"
+            android:layout_gravity="center"
+            android:textAlignment="center"/>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="15dp"/>
+
+        <include android:id="@+id/graph4" layout="@layout/fragment_graph"/>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="15dp"/>
+
+        <TextView
+            android:id="@+id/DescGraph3"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/performanceSleep"
+            android:layout_gravity="center"
+            android:textAlignment="center"/>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="15dp"/>
+
+        <include android:id="@+id/graph5" layout="@layout/fragment_graph"/>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="15dp"/>
+
+        <TextView
+            android:id="@+id/DescGraph4"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/SleepDistribution"
+            android:layout_gravity="center"
+            android:textAlignment="center"/>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="15dp"/>
+
+        <include android:id="@+id/graph6" layout="@layout/fragment_graph"/>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="15dp"/>
+
+        <TextView
+            android:id="@+id/DescGraph5"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/OverallGraph"
+            android:layout_gravity="center"
+            android:textAlignment="center"/>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="100dp"/>
+
+>>>>>>> Stashed changes
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

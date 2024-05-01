@@ -64,5 +64,9 @@
             android:contentDescription="@string/uminho"
             android:src="@drawable/um" />
 
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="100dp"/>
+
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
