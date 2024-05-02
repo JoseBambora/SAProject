@@ -13,17 +13,23 @@
         android:padding="16dp">
 
         <TextView
-            android:id="@+id/numberDaysDataBase"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
-
-        <include android:id="@+id/graph1" layout="@layout/fragment_graph"/>
-
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="15dp"/>
+            android:layout_height="match_parent"
+            android:text="@string/performance_data_analysis"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:layout_width="wrap_content"/>
 
         <include android:id="@+id/graph2" layout="@layout/fragment_graph"/>
+
+        <TextView
+            android:id="@+id/DescGraph1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/performanceValues"
+            android:layout_gravity="center"
+            android:textAlignment="center"/>
 
         <Space
             android:layout_width="0dp"
@@ -35,7 +41,31 @@
             android:layout_width="0dp"
             android:layout_height="15dp"/>
 
+        <TextView
+            android:id="@+id/DescGraph2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/performanceImpact"
+            android:layout_gravity="center"
+            android:textAlignment="center"/>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="15dp"/>
+
         <include android:id="@+id/graph4" layout="@layout/fragment_graph"/>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="15dp"/>
+
+        <TextView
+            android:id="@+id/DescGraph3"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/performanceSleep"
+            android:layout_gravity="center"
+            android:textAlignment="center"/>
 
         <Space
             android:layout_width="0dp"
@@ -47,6 +77,34 @@
             android:layout_width="0dp"
             android:layout_height="15dp"/>
 
+        <TextView
+            android:id="@+id/DescGraph4"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/SleepDistribution"
+            android:layout_gravity="center"
+            android:textAlignment="center"/>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="15dp"/>
+
         <include android:id="@+id/graph6" layout="@layout/fragment_graph"/>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="15dp"/>
+
+        <TextView
+            android:id="@+id/DescGraph5"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/OverallGraph"
+            android:layout_gravity="center"
+            android:textAlignment="center"/>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="100dp"/>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

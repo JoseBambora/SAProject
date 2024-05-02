@@ -36,8 +36,7 @@
             Log.d("DebugApp", "Error getting the weather data " + t.message)
         }
         override fun onLocationChanged(p0: Location) {
-            OpenWeatherAPI.getData(41.545448, -8.426507,::getData,::error,::fail)
-        }
+            OpenWeatherAPI.getData(p0.latitude, p0.altitude,::getData,::error,::fail)        }
         @SuppressLint("MissingPermission")
         fun onStart() {
             if(checkPermissions(context)) {
