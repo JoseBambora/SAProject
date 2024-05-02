@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:columnCount="2"
             android:orientation="horizontal"
-            android:rowCount="9">
+            android:rowCount="10">
 
             <TextView
                 android:id="@+id/title"
@@ -181,6 +181,25 @@
                 android:gravity="center"
                 android:layout_column="1"
                 android:layout_row="8" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/next_insert"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_column="0"
+                android:layout_row="9" />
+
+            <TextView
+                android:id="@+id/nextInsert"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_column="1"
+                android:layout_row="9" />
 
         </GridLayout>
     </ScrollView>

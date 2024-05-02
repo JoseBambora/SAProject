@@ -69,7 +69,7 @@ class SleepSensorsHelper(context: Context) : SensorEventListener {
             }
         }
         // Update SleepDetector with sensor data
-        SleepDetector.updateSensorData(this)
+        SleepDetector.detectSleep()
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {

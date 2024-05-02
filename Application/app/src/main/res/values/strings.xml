@@ -102,4 +102,5 @@
     <string name="avg_humidity">Avg Humidity:</string>
     <string name="avg_pressure">Avg Pressure:</string>
     <string name="data_stored">Data Stored:</string>
+    <string name="next_insert">Next Insert</string>
 </resources>

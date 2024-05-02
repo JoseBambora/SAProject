@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import com.example.application.R
+import com.example.application.data.DailyActivityTableFuns
+import com.example.application.utils.SaveData
 import com.example.application.utils.physicalactivity.PhysicalActivityData
 import com.example.application.utils.weather.WeatherData
 import java.time.LocalDate
@@ -46,7 +48,8 @@ class DataCollectionFragment : Fragment() {
         view.findViewById<TextView>(R.id.avgTemperature).text = weatherData?.main?.temperature.toString()
         view.findViewById<TextView>(R.id.avgHumidity).text = weatherData?.main?.humidity.toString()
         view.findViewById<TextView>(R.id.avgPressure).text = weatherData?.main?.pressure.toString()
-        //view.findViewById<TextView>(R.id.dataStored).text = DailyActivityTableFuns.getSizeData().toString()
+        view.findViewById<TextView>(R.id.dataStored).text = DailyActivityTableFuns.getSizeData().toString()
+        view.findViewById<TextView>(R.id.nextInsert).text = SaveData.nextInsert()
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -55,11 +58,12 @@ class DataCollectionFragment : Fragment() {
 
         val today = LocalDate.now()
         val date = dateTime.toLocalDate()
+        val formatted = dateTime.format(DateTimeFormatter.ofPattern("HH:mm"))
         return when (val daysDiff = ChronoUnit.DAYS.between(today, date)) {
-            0L -> "${dateTime.format(DateTimeFormatter.ofPattern("HH:mm"))} (today)"
-            1L -> "${dateTime.format(DateTimeFormatter.ofPattern("HH:mm"))} (yesterday)"
-            in Long.MIN_VALUE until 0 -> "${dateTime.format(DateTimeFormatter.ofPattern("HH:mm"))} (${daysDiff * -1} days ago)"
-            else -> "${dateTime.format(DateTimeFormatter.ofPattern("HH:mm"))} ($daysDiff days in the future)"
+            0L -> "$formatted (today)"
+            1L -> "$formatted (yesterday)"
+            in Long.MIN_VALUE until 0 -> "$formatted (${daysDiff * -1} days ago)"
+            else -> "$formatted ($daysDiff days in the future)"
         }
     }
 
