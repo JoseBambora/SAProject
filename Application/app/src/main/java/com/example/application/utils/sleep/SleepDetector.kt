@@ -38,9 +38,9 @@ class SleepDetector {
             }
         }
         @RequiresApi(Build.VERSION_CODES.O)
-        private fun isNight() : Boolean {
+        private fun isTimeToSleep() : Boolean {
             val current = LocalDateTime.now()
-            return current.hour in 22 downTo 7
+            return current.hour > 21 || current.hour < 3
         }
         @RequiresApi(Build.VERSION_CODES.O)
         fun detectSleep() {
@@ -63,20 +63,23 @@ class SleepDetector {
             // Log.d("SleepDetector", "isDark: $isDark, isStationary: $isStationary, isLayingDown: $isLayingDown, isInactive: $isInactive")
 
             // Check if conditions indicate sleep
-            if (isDark && isStationary && isLayingDown && isInactive && isNight()) {
+            // if the phone is not moving and isDark is true, we have two options:
+            // - the user start sleeping isTimeToSleep is true
+            // - the user is already sleeping isTimeToSleep can be true or false, but isSleeping is true
+            val flags = isDark && isStationary && isLayingDown && isInactive
+            val sleeping = isTimeToSleep() || isSleeping
+            if (flags && sleeping) {
                 if (!isSleeping) {
                     // Start of sleep detected
                     isSleeping = true
                     sleepStartTime = LocalDateTime.now()
                 }
-            } else {
-                if (isSleeping) {
-                    // End of sleep detected
-                    isSleeping = false
-                    val sleepEndTime = LocalDateTime.now()
-                    // Save sleep duration or perform further actions
-                    saveSleepData(sleepStartTime!!, sleepEndTime)
-                }
+            } else if(isSleeping) {
+                // End of sleep detected
+                isSleeping = false
+                val sleepEndTime = LocalDateTime.now()
+                // Save sleep duration or perform further actions
+                saveSleepData(sleepStartTime!!, sleepEndTime)
             }
         }
 
