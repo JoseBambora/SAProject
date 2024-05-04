@@ -1,23 +1,11 @@
 package com.example.application.ui
 
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import com.example.application.R
-import com.example.application.network.csstats.StatsAPI
-import com.example.application.model.config.ConfigTableFuns
-import com.example.application.model.csstats.Cache
-import com.example.application.model.csstats.Stats
-import com.example.application.databinding.FragmentFirstBinding
-import retrofit2.Response
+import com.example.application.databinding.FragmentMainPageBinding
 
 
 /**
@@ -25,7 +13,7 @@ import retrofit2.Response
  */
 class MainPageFragment : Fragment() {
 
-    private var _binding: FragmentFirstBinding? = null
+    private var _binding: FragmentMainPageBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -36,7 +24,7 @@ class MainPageFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        _binding = FragmentFirstBinding.inflate(inflater, container, false)
+        _binding = FragmentMainPageBinding.inflate(inflater, container, false)
         return binding.root
 
     }

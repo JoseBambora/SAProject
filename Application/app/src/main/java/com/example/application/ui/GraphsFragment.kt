@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import com.anychart.APIlib
 import com.anychart.AnyChartView
 import com.example.application.data.DailyActivityTableFuns
-import com.example.application.databinding.FragmentSecondBinding
+import com.example.application.databinding.FragmentGraphsBinding
 import com.example.application.model.DailyActivity
 import com.example.application.model.csstats.Cache
 import com.example.application.ui.graphs.Converter
@@ -20,7 +20,7 @@ import java.time.LocalDate
 
 class GraphsFragment : Fragment() {
 
-    private var _binding: FragmentSecondBinding? = null
+    private var _binding: FragmentGraphsBinding? = null
 
     private val binding get() = _binding!!
 
@@ -31,7 +31,7 @@ class GraphsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        _binding = FragmentSecondBinding.inflate(inflater, container, false)
+        _binding = FragmentGraphsBinding.inflate(inflater, container, false)
         return binding.root
 
     }
@@ -57,15 +57,6 @@ class GraphsFragment : Fragment() {
     private fun getDailyActivityData() : Map<LocalDate,DailyActivity>{
         return DailyActivityTableFuns.getDailyActivity()
     }
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun histogramPerformanceActivity(graph1 : AnyChartView) {
-        val dataMatches = cache.getDailyPerformance()
-        val dataActivity = fakeDataActivity()
-        val data = Converter.associationPerformance(dataMatches,dataActivity)
-        val histogram = OurGraphs.histogram(data,"Performance Daily Activity","Score Daily Activity","Avg Daily Match Performance")
-        graph1.setChart(histogram)
-    }
-
     private fun frequencyMatchPerformances(graph2 : AnyChartView) {
         val dataFrequency = cache.getPerformanceFrequency()
         val data = Converter.percentagePerformance(dataFrequency)
@@ -78,9 +69,17 @@ class GraphsFragment : Fragment() {
         val dataMatches = cache.getDailyPerformance()
         val dataActivity = fakeDataActivity()
         val data = Converter.associationPhysicalActivity(dataMatches,dataActivity)
-        val histogram = OurGraphs.histogram(data,"Performance Daily Physical Activity","Score Daily Physical Activity","Avg Daily Match performance")
+        val histogram = OurGraphs.histogram(data,"Daily Physical Activity Impact","Match Performance","Avg Daily Activity Score")
         graph3.setChart(histogram)
+    }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun histogramWeatherImpact(graph3: AnyChartView) {
+        val dataMatches = cache.getDailyPerformance()
+        val dataActivity = fakeDataActivity()
+        val data = Converter.associationWeather(dataMatches,dataActivity)
+        val histogram = OurGraphs.histogram3Params(data,"Weather Impact","Match Performance","Avg Weather data")
+        graph3.setChart(histogram)
     }
     @RequiresApi(Build.VERSION_CODES.O)
     private fun scatterPlotPerformances(graph4: AnyChartView) {
@@ -101,7 +100,7 @@ class GraphsFragment : Fragment() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun weatherRelation(graph6: AnyChartView) {
+    private fun progressOverTime(graph6: AnyChartView) {
         val dataMatches = cache.getDailyPerformance()
         val dataActivity = fakeDataActivity()
         val data = Converter.overallData(dataMatches,dataActivity)
@@ -118,12 +117,12 @@ class GraphsFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //drawGraph(binding.graph1.graph,binding.graph1.progressBar,::histogramPerformanceActivity)
         drawGraph(binding.graph2.graph,binding.graph2.progressBar,::frequencyMatchPerformances)
         drawGraph(binding.graph3.graph,binding.graph3.progressBar,::histogramPhysicalActivityImpact)
         drawGraph(binding.graph4.graph,binding.graph4.progressBar,::scatterPlotPerformances)
         drawGraph(binding.graph5.graph,binding.graph5.progressBar,::pieSleepingTime)
-        drawGraph(binding.graph6.graph,binding.graph6.progressBar,::weatherRelation)
+        drawGraph(binding.graph6.graph,binding.graph6.progressBar,::progressOverTime)
+        drawGraph(binding.graph7.graph,binding.graph7.progressBar,::histogramWeatherImpact)
     }
 
     override fun onDestroyView() {

@@ -48,6 +48,43 @@ class OurGraphs {
             return cartesian
         }
 
+        private fun histrogramAux(cartesian : Cartesian,line : String, seriesMapping : Mapping ) : Column {
+            val column : Column = cartesian.column(seriesMapping)
+            column.name(line)
+            column.tooltip()
+                .titleFormat("{%X}")
+                .position(Position.CENTER_BOTTOM)
+                .anchor(Anchor.CENTER_BOTTOM)
+                .offsetX(0.0)
+                .offsetY(10000000.0)
+                .format("\${%Value}{groupsSeparator: }")
+            return column;
+        }
+        fun histogram3Params(data : List<DataEntry>, title : String, xTitle : String, yTitle : String) : Cartesian {
+            val cartesian = AnyChart.column()
+            val set: Set = Set.instantiate()
+            set.data(data)
+            val series1Mapping = set.mapAs("{ x: 'x', value: 'value' }")
+            val series2Mapping = set.mapAs("{ x: 'x', value: 'value2' }")
+            val series3Mapping = set.mapAs("{ x: 'x', value: 'value3' }")
+
+            histrogramAux(cartesian,"Temperature",series1Mapping)
+            histrogramAux(cartesian,"Humidity",series2Mapping)
+            histrogramAux(cartesian,"Pressure",series3Mapping)
+
+            cartesian.animation(true)
+            cartesian.title(title)
+            cartesian.legend().enabled(true)
+            cartesian.legend().fontSize(13.0)
+            cartesian.legend().padding(0.0, 0.0, 10.0, 0.0)
+
+            cartesian.tooltip().positionMode(TooltipPositionMode.POINT)
+            cartesian.interactivity().hoverMode(HoverMode.BY_X)
+
+            cartesian.xAxis(0).title(xTitle)
+            cartesian.yAxis(0).title(yTitle)
+            return cartesian
+        }
 
         fun pie(data : List<DataEntry>, title: String, label : String ): Pie {
 
@@ -102,7 +139,7 @@ class OurGraphs {
                 .format("Waiting time: \${%Value} min.\\nDuration: \${%X} min.")
             return scatter
         }
-        private fun lineCharAux(cartesian : Cartesian,line : String, seriesMapping : Mapping) : Line {
+        private fun lineChartAux(cartesian : Cartesian, line : String, seriesMapping : Mapping) : Line {
             val series : Line = cartesian.line(seriesMapping)
             series.name(line)
             series.hovered().markers().enabled(true)
@@ -120,20 +157,11 @@ class OurGraphs {
             val cartesian = AnyChart.line()
 
             cartesian.animation(true)
-
             cartesian.padding(10.0, 20.0, 5.0, 20.0)
-
             cartesian.crosshair().enabled(true)
-            cartesian.crosshair()
-                .yLabel(true)
-                .yStroke(null as Stroke?, null, null, null as String?, null as String?)
-
+            cartesian.crosshair().yLabel(true)
+            cartesian.crosshair().yStroke(null as Stroke?, null, null, null as String?, null as String?)
             cartesian.tooltip().positionMode(TooltipPositionMode.POINT)
-
-            cartesian.title(title)
-
-            cartesian.yAxis(0).title(yTitle)
-            cartesian.xAxis(0).title(xTitle).labels().padding(5.0, 5.0, 5.0, 5.0)
 
             val set: Set = Set.instantiate()
             set.data(data)
@@ -144,16 +172,19 @@ class OurGraphs {
             val series5Mapping = set.mapAs("{ x: 'x', value: 'value5' }")
             val series6Mapping = set.mapAs("{ x: 'x', value: 'value6' }")
 
-            lineCharAux(cartesian,line1,series1Mapping)
-            lineCharAux(cartesian,line2,series2Mapping)
-            lineCharAux(cartesian,line3,series3Mapping)
-            lineCharAux(cartesian,line4,series4Mapping)
-            lineCharAux(cartesian,line5,series5Mapping)
-            lineCharAux(cartesian,line6,series6Mapping)
+            lineChartAux(cartesian,line1,series1Mapping)
+            lineChartAux(cartesian,line2,series2Mapping)
+            lineChartAux(cartesian,line3,series3Mapping)
+            lineChartAux(cartesian,line4,series4Mapping)
+            lineChartAux(cartesian,line5,series5Mapping)
+            lineChartAux(cartesian,line6,series6Mapping)
 
             cartesian.legend().enabled(true)
             cartesian.legend().fontSize(13.0)
             cartesian.legend().padding(0.0, 0.0, 10.0, 0.0)
+            cartesian.title(title)
+            cartesian.yAxis(0).title(yTitle)
+            cartesian.xAxis(0).title(xTitle).labels().padding(5.0, 5.0, 5.0, 5.0)
             return cartesian
         }
     }

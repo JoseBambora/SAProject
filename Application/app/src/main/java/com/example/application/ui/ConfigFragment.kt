@@ -8,7 +8,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import com.example.application.R
 import com.example.application.model.config.Config
 import com.example.application.model.config.ConfigTableFuns
@@ -32,10 +31,6 @@ class ConfigFragment : Fragment() {
         }
     }
 
-    private fun loadConfig() {
-
-    }
-
     private fun setOnClicks(view : View) {
         view.findViewById<Button>(R.id.submit_config)?.setOnClickListener {v -> saveConfig()}
     }
@@ -43,6 +38,5 @@ class ConfigFragment : Fragment() {
         val csstatsid = view?.findViewById<EditText>(R.id.csstatsid)?.text.toString()
         ConfigTableFuns.newConfig(config, csstatsid, 0.0f, true)
         Toast.makeText(activity, "Config saved", Toast.LENGTH_SHORT).show()
-        findNavController().navigate(R.id.action_to_inicial_menu)
     }
 }

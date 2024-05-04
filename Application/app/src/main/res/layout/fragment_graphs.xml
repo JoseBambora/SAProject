@@ -35,6 +35,24 @@
             android:layout_width="0dp"
             android:layout_height="15dp"/>
 
+        <include android:id="@+id/graph5" layout="@layout/fragment_graph"/>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="15dp"/>
+
+        <TextView
+            android:id="@+id/DescGraph4"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/SleepDistribution"
+            android:layout_gravity="center"
+            android:textAlignment="center"/>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="15dp"/>
+
         <include android:id="@+id/graph3" layout="@layout/fragment_graph"/>
 
         <Space
@@ -53,6 +71,24 @@
             android:layout_width="0dp"
             android:layout_height="15dp"/>
 
+        <include android:id="@+id/graph7" layout="@layout/fragment_graph"/>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="15dp"/>
+
+        <TextView
+            android:id="@+id/DescGraph6"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/performanceImpact2"
+            android:layout_gravity="center"
+            android:textAlignment="center"/>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="15dp"/>
+
         <include android:id="@+id/graph4" layout="@layout/fragment_graph"/>
 
         <Space
@@ -64,24 +100,6 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/performanceSleep"
-            android:layout_gravity="center"
-            android:textAlignment="center"/>
-
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="15dp"/>
-
-        <include android:id="@+id/graph5" layout="@layout/fragment_graph"/>
-
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="15dp"/>
-
-        <TextView
-            android:id="@+id/DescGraph4"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/SleepDistribution"
             android:layout_gravity="center"
             android:textAlignment="center"/>
 
