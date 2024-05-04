@@ -64,7 +64,7 @@ class BackgroundService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        Log.d("DebugApp","A começar serviço")
+        Log.d("DebugApp","Starting Service")
         createNotificationChannel()
         activitySensorsHelper.onStart()
         weatherSensorsHelper.onStart()
@@ -75,7 +75,7 @@ class BackgroundService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        Log.d("DebugApp","A criar serviço")
+        Log.d("DebugApp","Creating service")
         activitySensorsHelper = ActivitySensorsHelper(this)
         weatherSensorsHelper = WeatherSensorsHelper(this)
         sleepSensorsHelper = SleepSensorsHelper(this)
@@ -83,7 +83,7 @@ class BackgroundService : Service() {
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.d("DebugApp","A terminar serviço")
+        Log.d("DebugApp","Ending Service")
         activitySensorsHelper.onStop()
         weatherSensorsHelper.onStop()
         sleepSensorsHelper.onStop()

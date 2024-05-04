@@ -71,7 +71,6 @@ class MainActivity : AppCompatActivity() {
     }
     private fun initiateService() {
         if(permissionsGranted) {
-            Log.d("DebugApp","Service started")
             val serviceIntent = Intent(this, BackgroundService::class.java)
             startService(serviceIntent)
         }

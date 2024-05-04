@@ -34,6 +34,7 @@ class SleepDetector {
                 val dif = FloatArray(3)
                 for(i in 0..2)
                     dif[i] = abs(previousData[i] - data[i])
+                // Log.d("DebugApp","Dif: ${dif.sum()} ${previousData.toSet()} ${data.toSet()}")
                 dif.sum() < threshold
             }
         }
@@ -54,9 +55,9 @@ class SleepDetector {
             val isLayingDown = lowerThanThreshold(gravityData, previousGravityData,GRAVITY_THRESHOLD)
             val isInactive = lowerThanThreshold(gyroscopeData, previousGyroscopeData,GYROSCOPE_THRESHOLD)
 
-            previousAccelerometerData = accelerometerData
-            previousGravityData = gravityData
-            previousGyroscopeData = gyroscopeData
+            previousAccelerometerData = accelerometerData.clone()
+            previousGravityData = gravityData.clone()
+            previousGyroscopeData = gyroscopeData.clone()
 
             // Log values for debugging
             // Log.d("DebugApp", "isDark: $lightIntensity, isStationary: $isStationary, isLayingDown: $isLayingDown, isInactive: $isInactive")
@@ -73,6 +74,7 @@ class SleepDetector {
                     // Start of sleep detected
                     isSleeping = true
                     sleepStartTime = LocalDateTime.now()
+                    Log.d("DebugApp","Started Sleeping")
                 }
             } else if(isSleeping) {
                 // End of sleep detected
@@ -80,6 +82,7 @@ class SleepDetector {
                 val sleepEndTime = LocalDateTime.now()
                 // Save sleep duration or perform further actions
                 saveSleepData(sleepStartTime!!, sleepEndTime)
+                Log.d("DebugApp","End Sleeping")
             }
         }
 
