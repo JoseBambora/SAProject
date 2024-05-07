@@ -46,8 +46,8 @@ class SaveData : BroadcastReceiver() {
         val today = LocalDate.now()
         val distanceRun = physical.distanceRun
         val steps = physical.steps
-        val start = sleepData.getStartTime() ?: LocalDateTime.now()
-        val end = sleepData.getEndTime() ?: LocalDateTime.now()
+        val start = if (sleepData.getStartTime() != null) sleepData.getStartTime()!! else LocalDateTime.now()
+        val end = if (sleepData.getEndTime() != null) sleepData.getEndTime()!! else LocalDateTime.now()
         val avgTemperature = weather.main.temperature.toFloat()
         val avgHumidity = weather.main.humidity
         val avgPressure = weather.main.pressure

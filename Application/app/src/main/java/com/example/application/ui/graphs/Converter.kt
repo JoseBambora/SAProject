@@ -93,7 +93,7 @@ class Converter {
             dataMatches?.forEach {
                 if(dataActivity.containsKey(it.key)) {
                     val act = dataActivity[it.key]!!
-                    data.add(DataEntryOverall(it.key.toString(),it.value.value,act.getPerformancePhysicalActivity(),act.getSleepingTimeHours(),act.avgTemperature,act.avgHumidity,act.avgPressure))
+                    data.add(DataEntryOverall(it.key.toString(),it.value.value,act.getPerformancePhysicalActivity(),act.getSleepingTimeHours(),act.avgTemperature,act.avgHumidity,act.avgPressure/100))
                 }
             }
             return data.sortedBy { it.x }
