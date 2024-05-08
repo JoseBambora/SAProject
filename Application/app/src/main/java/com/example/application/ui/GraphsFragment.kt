@@ -69,7 +69,7 @@ class GraphsFragment : Fragment() {
         val dataMatches = cache.getDailyPerformance()
         val dataActivity = getDailyActivityData()
         val data = Converter.associationSleepingTime(dataMatches,dataActivity)
-        val scatter = OurGraphs.scatterPlot(data,"Performance Daily Activity","Score Daily Activity","Avg Daily Match Performance")
+        val scatter = OurGraphs.scatterPlot(data,"Performance Daily Activity","Sleeping Minutes","Avg Daily Match Performance")
         graph4.setChart(scatter)
     }
 

@@ -35,7 +35,7 @@ class OurGraphs {
                 .anchor(Anchor.CENTER_BOTTOM)
                 .offsetX(0.0)
                 .offsetY(10000000.0)
-                .format("\${%Value}{groupsSeparator: }")
+                .format("{%Value}{groupsSeparator: }")
 
             cartesian.animation(true)
             cartesian.title(title)
@@ -57,7 +57,7 @@ class OurGraphs {
                 .anchor(Anchor.CENTER_BOTTOM)
                 .offsetX(0.0)
                 .offsetY(10000000.0)
-                .format("\${%Value}{groupsSeparator: }")
+                .format("{%Value}{groupsSeparator: }")
             return column;
         }
         fun histogram3Params(data : List<DataEntry>, title : String, xTitle : String, yTitle : String) : Cartesian {

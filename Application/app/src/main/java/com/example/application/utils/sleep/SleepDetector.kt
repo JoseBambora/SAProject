@@ -74,7 +74,7 @@ class SleepDetector {
                     // Start of sleep detected
                     isSleeping = true
                     sleepStartTime = LocalDateTime.now()
-                    Log.d("DebugApp","Started Sleeping")
+                    // Log.d("DebugApp","Started Sleeping")
                 }
             } else if(isSleeping) {
                 // End of sleep detected
@@ -82,7 +82,7 @@ class SleepDetector {
                 val sleepEndTime = LocalDateTime.now()
                 // Save sleep duration or perform further actions
                 saveSleepData(sleepStartTime!!, sleepEndTime)
-                Log.d("DebugApp","End Sleeping")
+                // Log.d("DebugApp","End Sleeping")
             }
         }
 
