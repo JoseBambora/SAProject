@@ -11,7 +11,6 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.application.databinding.ActivityMainBinding
 import com.example.application.data.ManagerDB
@@ -30,6 +29,10 @@ class MainActivity : AppCompatActivity() {
 
     private var permissionsGranted : Boolean = false
 
+    private fun home() {
+        binding.bottomNavigationView.selectedItemId = R.id.home
+    }
+
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,17 +50,23 @@ class MainActivity : AppCompatActivity() {
         initiateCache()
         checkPermission()
         initiateService()
+        var previousItemId: Int = R.id.home
         binding.bottomNavigationView.selectedItemId=R.id.home
         binding.bottomNavigationView.setOnNavigationItemSelectedListener {
             when(it.itemId){
-                R.id.reload->initiateCache()
+                R.id.reload->{
+                    initiateCache()
+                    home()
+                }
                 R.id.sensorData->findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.dataCollectionFragment)
                 R.id.home->findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.FirstFragment)
                 R.id.graphs->
                             if(Cache.getInstance().hasInfo())
                                 findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.SecondFragment)
-                            else
+                            else {
+                                home()
                                 Toast.makeText(this, "No performance Data", Toast.LENGTH_SHORT).show()
+                            }
                 R.id.settings->findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.ConfigFragment)
             }
             true
@@ -71,7 +80,6 @@ class MainActivity : AppCompatActivity() {
     }
     private fun initiateService() {
         if(permissionsGranted) {
-            Log.d("DebugApp","Service started")
             val serviceIntent = Intent(this, BackgroundService::class.java)
             startService(serviceIntent)
         }

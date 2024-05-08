@@ -41,7 +41,6 @@ data class DailyActivity(
     }
     @RequiresApi(Build.VERSION_CODES.O)
     fun getSleepingTimeHours() : Float {
-        Log.d("DebugApp",Duration.between(startSleepTime, endSleepTime).toHours().toFloat().toString())
         return Duration.between(startSleepTime, endSleepTime).toHours().toFloat()
     }
     fun getPerformancePhysicalActivity(): Float {

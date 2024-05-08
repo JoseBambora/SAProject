@@ -10,11 +10,14 @@ app = Flask(__name__)
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 util = Utils()
 
+cache = {}
 
 def get_stats(id):
-    site = 'https://csstats.gg/player/'
-    url = f'{site}{id}'
-    return csgostats_scraper.scrape_profile(url, util)
+    if not id in cache.keys():
+        site = 'https://csstats.gg/player/'
+        url = f'{site}{id}'
+        cache[id] = csgostats_scraper.scrape_profile(url, util)
+    return cache[id]
 
 
 @app.route('/stats/<string:idPlayer>/', methods=['GET'])

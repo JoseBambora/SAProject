@@ -17,8 +17,20 @@ import com.example.application.utils.physicalactivity.PhysicalActivityData
 import com.example.application.utils.weather.WeatherData
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.util.Locale
 
 class SaveData : BroadcastReceiver() {
+    companion object {
+        @RequiresApi(Build.VERSION_CODES.O)
+        private var lastInsert : LocalDate = LocalDate.now()
+
+        @RequiresApi(Build.VERSION_CODES.O)
+        fun nextInsert() : String {
+            val res = lastInsert.plusDays(1).dayOfWeek.toString()
+            return res[0] + res.substring(1).lowercase(Locale.ROOT)
+        }
+    }
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onReceive(context: Context?, intent: Intent?) {
         saveData()
     }
@@ -34,8 +46,8 @@ class SaveData : BroadcastReceiver() {
         val today = LocalDate.now()
         val distanceRun = physical.distanceRun
         val steps = physical.steps
-        val start = sleepData.getStartTime() ?: LocalDateTime.now()
-        val end = sleepData.getEndTime() ?: LocalDateTime.now()
+        val start = if (sleepData.getStartTime() != null) sleepData.getStartTime()!! else LocalDateTime.now()
+        val end = if (sleepData.getEndTime() != null) sleepData.getEndTime()!! else LocalDateTime.now()
         val avgTemperature = weather.main.temperature.toFloat()
         val avgHumidity = weather.main.humidity
         val avgPressure = weather.main.pressure
@@ -53,17 +65,21 @@ class SaveData : BroadcastReceiver() {
         // if(config != null)
         //     StatsAPI.getData(config.csstatsID, StatsAPI::default_suc, StatsAPI::default_err1, StatsAPI::default_err2)
         DailyActivityTableFuns.newDailyActivity(dailyActivity)
+        lastInsert = LocalDate.now()
         Log.d("DebugApp", "New Daily activity on the database $dailyActivity")
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun saveData() {
-        val weather = WeatherData.instance.getAvgWeather()
-        val physical = PhysicalActivityData.instance.getData()
-        val sleepData = SleepData.instance
-        resetValues()
+        if(LocalDate.now().dayOfWeek != lastInsert.dayOfWeek) {
+            val weather = WeatherData.instance.getAvgWeather()
+            val physical = PhysicalActivityData.instance.getData()
+            val sleepData = SleepData.instance
+            resetValues()
 
-        if(weather != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-           insertData(weather,physical,sleepData)
+            if(weather != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                insertData(weather,physical,sleepData)
+            }
         }
     }
 }
